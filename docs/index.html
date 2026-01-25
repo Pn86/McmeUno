@@ -658,13 +658,17 @@
                 <div class="stats-grid">
                     <div class="stat-item">
                         <i class="fas fa-calendar-alt"></i>
+                        <div class="stat-value" id="serverDays">2026-1-23</div>
+                        <p>服务器出生日</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-calendar-alt"></i>
                         <div class="stat-value" id="serverDays">
                             <script>
-                                // 计算从2026.1.24开始的天数
                                 document.write(
                                     Math.max(
                                         Math.floor(
-                                            (new Date() - new Date('2026-01-24')) / (1000 * 3600 * 24)
+                                            (new Date() - new Date('2026-01-22')) / (1000 * 3600 * 24)
                                         ), 
                                         0
                                     )
@@ -715,7 +719,7 @@
             <h2>服务器规则</h2>
         </div>
         <div class="edit-note" style="max-width: 800px; margin: 0 auto 30px;">
-            以下仅限于基本规则，具体见玩家游玩协议
+            以下仅限于基本规则，具体见【玩家游玩协议】
         </div>
         <div class="rules-grid">
             <div class="rule-card">
@@ -726,7 +730,7 @@
                     <h3>基本规则</h3>
                     <ul>
                         <li>尊重其他玩家</li>
-                        <li>禁止使用外挂</li>
+                        <li>适当使用外挂</li>
                         <li>禁止恶意破坏</li>
                         <li>文明聊天交流</li>
                     </ul>
@@ -737,11 +741,11 @@
                     <i class="fas fa-gavel"></i>
                 </div>
                 <div class="rule-content">
-                    <h3>建筑规则</h3>
+                    <h3>游戏规则</h3>
                     <ul>
-                        <li>建筑不得影响他人</li>
-                        <li>公共区域保持整洁</li>
-                        <li>大型建筑需申请</li>
+                        <li>不得影响他人</li>
+                        <li>禁止恶意破坏地形</li>
+                        <li>大型红石等机械需申请</li>
                         <li>禁止建造不当内容</li>
                     </ul>
                 </div>
@@ -793,7 +797,7 @@
             </div>
             <div style="margin-top: 40px;">
                 <a href="#home" class="cta-button">复制服务器IP</a>
-                <a href="#contact" class="cta-button">获取帮助</a>
+                <a href="https://qm.qq.com/q/es4N2osf0A" class="cta-button">加入QQ群</a>
             </div>
         </div>
     </section>
@@ -805,26 +809,21 @@
                 <h2>联系我们</h2>
             </div>
             
-            <div class="edit-note" style="background-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9); margin: 20px auto; max-width: 600px;">
-                管理员提示：您可以修改下面的联系方式和社交媒体链接
-            </div>
-            
             <div class="footer-links">
-                <a href="#">官方网站</a>
-                <a href="#">玩家论坛</a>
-                <a href="#">问题反馈</a>
-                <a href="#">捐赠支持</a>
+                <a href="https://qm.qq.com/q/es4N2osf0A">玩家群聊</a>
+                <a href="https://github.com/Pn86/Minecraft-McmeUno-Server/releases">更新日志</a>
+                <a href="https://github.com/Pn86/Minecraft-McmeUno-Server/issues">问题反馈</a>
+                <a href="https://github.com/Pn86/Minecraft-McmeUno-Server/blob/main/Agreement/Player%20Agreement.txt">玩家协议</a>
             </div>
             
             <div class="social-links">
-                <a href="#" title="QQ群"><i class="fab fa-qq"></i></a>
-                <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
-                <a href="#" title="Bilibili"><i class="fab fa-bilibili"></i></a>
-                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://qm.qq.com/q/es4N2osf0A" title="QQ群"><i class="fab fa-qq"></i></a>
+                <a href="https://space.bilibili.com/3546824969292637?spm_id_from=333.1007.0.0" title="Bilibili"><i class="fab fa-bilibili"></i></a>
+                <a href="https://github.com/Pn86/Minecraft-McmeUno-Server" title="GitHub"><i class="fab fa-github"></i></a>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2024 我的世界服务器 版权所有</p>
+                <p>&copy; 2026 McmeUno</p>
                 <p>本服务器与Mojang Studios无关 | 我的世界是Mojang Studios的商标</p>
             </div>
         </div>
@@ -848,7 +847,7 @@
             const ip = document.getElementById('serverIP').textContent;
             navigator.clipboard.writeText(ip).then(() => {
                 const originalText = document.getElementById('serverIP').textContent;
-                document.getElementById('serverIP').textContent = '已复制到剪贴板！';
+                document.getElementById('serverIP').textContent = '已复制';
                 document.getElementById('serverIP').style.backgroundColor = '#4CAF50';
                 
                 setTimeout(() => {
@@ -880,18 +879,6 @@
             el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             observer.observe(el);
         });
-
-        // 模拟实时玩家数量（可选）
-        function updatePlayerCount() {
-            const playerCount = document.getElementById('onlinePlayers');
-            const currentCount = parseInt(playerCount.textContent);
-            const randomChange = Math.floor(Math.random() * 3) - 1; // -1, 0, 或 1
-            const newCount = Math.max(1, currentCount + randomChange);
-            playerCount.textContent = newCount;
-        }
-
-        // 每30秒更新一次玩家数量（可选功能）
-        // setInterval(updatePlayerCount, 30000);
 
         // 管理员编辑提示
         console.log("管理员提示：这是一个我的世界服务器官网模板，您可以修改以下内容：");
