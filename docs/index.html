@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的世界服务器官网模板</title>
+    <title>McmeUno</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -603,13 +603,13 @@
         <div class="nav-container">
             <a href="#" class="logo">
                 <i class="fas fa-cube"></i>
-                <span class="server-name">我的世界服务器</span>
+                <span class="server-name">McmeUno</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#home">首页</a></li>
-                <li><a href="#info">服务器信息</a></li>
-                <li><a href="#features">游戏特色</a></li>
-                <li><a href="#rules">服务器规则</a></li>
+                <li><a href="#info">信息</a></li>
+                <li><a href="#features">特色</a></li>
+                <li><a href="#rules">规则</a></li>
                 <li><a href="#join">加入我们</a></li>
                 <li><a href="#contact">联系我们</a></li>
             </ul>
@@ -619,19 +619,15 @@
     <!-- 英雄区域 -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1 class="server-title">欢迎来到我的世界服务器</h1>
+            <h1 class="server-title">欢迎来到McmeUno</h1>
             <p class="server-slogan">一个充满冒险与创造的世界，等待您的探索！</p>
             
-            <div class="edit-note">
-                管理员提示：您可以修改下面的服务器IP地址和描述
-            </div>
-            
             <div class="server-ip" onclick="copyIP()" id="serverIP">
-                play.yourserver.com
+                mcme.uno
             </div>
             
             <div class="server-description">
-                <p>版本：Java版 1.20.4 | 全天24小时开放 | 100%原版体验</p>
+                <p>版本：Java版 1.21.8 | 超多趣味玩法 | 持续招新中！</p>
             </div>
             
             <div>
@@ -652,12 +648,9 @@
         </div>
         <div class="info-content">
             <div class="info-text">
-                <div class="edit-note">
-                    管理员提示：您可以编辑下面的服务器介绍和描述
-                </div>
-                <h3>关于我们的服务器</h3>
-                <p>欢迎来到我们的我的世界服务器！我们致力于为玩家提供最优质的游戏体验。</p>
-                <p>服务器采用原版生存模式，同时添加了一些实用的优化插件，确保游戏流畅且公平。</p>
+                <h3>关于McmeUno</h3>
+                <p>欢迎来到McmeUno服务器！我们致力于为玩家提供最优质的游戏体验。</p>
+                <p>服务器采用趣味生存模式，添加各种趣味玩法，同时添加了一些实用的优化插件，确保游戏流畅且公平。</p>
                 <p>我们拥有友好的玩家社区，定期举办各种活动，让每位玩家都能找到属于自己的乐趣。</p>
                 <p>无论你是建筑大师、红石工程师，还是探险家，这里都有你发挥的空间！</p>
             </div>
@@ -665,23 +658,13 @@
                 <div class="stats-grid">
                     <div class="stat-item">
                         <i class="fas fa-users"></i>
-                        <div class="stat-value" id="onlinePlayers">24</div>
+                        <div class="stat-value" id="onlinePlayers">?</div>
                         <p>在线玩家</p>
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-calendar-alt"></i>
-                        <div class="stat-value" id="serverDays">365</div>
-                        <p>运行天数</p>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-map"></i>
-                        <div class="stat-value" id="worldSize">1024</div>
-                        <p>世界大小(GB)</p>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-shield-alt"></i>
-                        <div class="stat-value" id="uptime">99.9%</div>
-                        <p>服务器在线率</p>
+                        <div class="stat-value" id="serverDays">1</div>
+                        <p>运行月数</p>
                     </div>
                 </div>
             </div>
@@ -693,9 +676,6 @@
         <div class="features-container">
             <div class="section-title">
                 <h2>游戏特色</h2>
-            </div>
-            <div class="edit-note" style="max-width: 800px; margin: 0 auto 30px;">
-                管理员提示：您可以修改下面的游戏特色内容
             </div>
             <div class="features-grid">
                 <div class="feature-card">
@@ -715,8 +695,8 @@
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-magic"></i>
-                    <h3>优化体验</h3>
-                    <p>多种优化插件，保证游戏流畅不卡顿</p>
+                    <h3>多元化玩法</h3>
+                    <p>超多玩法保证你不无聊！</p>
                 </div>
             </div>
         </div>
@@ -728,7 +708,7 @@
             <h2>服务器规则</h2>
         </div>
         <div class="edit-note" style="max-width: 800px; margin: 0 auto 30px;">
-            管理员提示：您可以编辑下面的服务器规则
+            以下仅限于基本规则，具体见玩家游玩协议
         </div>
         <div class="rules-grid">
             <div class="rule-card">
@@ -767,9 +747,9 @@
                     <h3>惩罚措施</h3>
                     <ul>
                         <li>初次违规：警告</li>
-                        <li>再次违规：禁言</li>
-                        <li>严重违规：封禁</li>
-                        <li>永久违规：永久封禁</li>
+                        <li>再次违规：封禁</li>
+                        <li>严重违规：封禁IP段</li>
+                        <li>多次违规：永久封禁IP段</li>
                     </ul>
                 </div>
             </div>
@@ -782,14 +762,11 @@
             <div class="section-title">
                 <h2>如何加入</h2>
             </div>
-            <div class="edit-note">
-                管理员提示：您可以修改下面的加入步骤
-            </div>
             <div class="join-steps">
                 <div class="step">
                     <div class="step-number">1</div>
                     <h3>启动游戏</h3>
-                    <p>打开我的世界Java版，版本1.20.4</p>
+                    <p>打开我的世界Java版，版本1.21.8，或者兼容的版本</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
@@ -799,7 +776,7 @@
                 <div class="step">
                     <div class="step-number">3</div>
                     <h3>输入地址</h3>
-                    <p>在服务器地址中输入：play.yourserver.com</p>
+                    <p>在服务器地址中输入：mcme.uno</p>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
@@ -829,7 +806,6 @@
                 <a href="#">官方网站</a>
                 <a href="#">玩家论坛</a>
                 <a href="#">问题反馈</a>
-                <a href="#">申请OP</a>
                 <a href="#">捐赠支持</a>
             </div>
             
