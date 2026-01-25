@@ -6,3 +6,6 @@
 
 【物品道具】
 {"text":"","extra":[{"text":"==================================","italic":true,"color":"dark_gray"},{"text":"\nLore\n","italic":true,"color":"white"},{"text":"==================================","italic":true,"color":"dark_gray"},{"text":"\n","italic":true,"color":"white"},{"text":"◈","color":"dark_aqua"},{"text":"道具等级 >>\n","color":"aqua"},{"text":" ⭐⭐","color":"yellow"},{"text":"⭐⭐","color":"dark_gray"},{"text":"\n","italic":true,"color":"white"},{"text":"==================================","italic":true,"color":"dark_gray"}]}
+
+
+无法破坏NBT："minecraft:unbreakable":{show_in_tooltip:0b}
