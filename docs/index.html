@@ -623,11 +623,11 @@
             <p class="server-slogan">一个充满冒险与创造的世界，等待您的探索！</p>
             
             <div class="server-ip" onclick="copyIP()" id="serverIP">
-                mcme.uno
+                mc.mcme.uno
             </div>
             
             <div class="server-description">
-                <p>版本：Java版 1.21.8 | 超多趣味玩法 | 持续招新中！</p>
+                <p>版本：Java版 1.13-1.21.10 | 超多趣味玩法 | 持续招新中！</p>
             </div>
             
             <div>
@@ -657,14 +657,21 @@
             <div class="server-stats">
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <i class="fas fa-users"></i>
-                        <div class="stat-value" id="onlinePlayers">?</div>
-                        <p>在线玩家</p>
-                    </div>
-                    <div class="stat-item">
                         <i class="fas fa-calendar-alt"></i>
-                        <div class="stat-value" id="serverDays">1</div>
-                        <p>运行月数</p>
+                        <div class="stat-value" id="serverDays">
+                            <script>
+                                // 计算从2026.1.24开始的天数
+                                document.write(
+                                    Math.max(
+                                        Math.floor(
+                                            (new Date() - new Date('2026-01-24')) / (1000 * 3600 * 24)
+                                        ), 
+                                        0
+                                    )
+                                );
+                            </script>
+                        </div>
+                        <p>运行天数</p>
                     </div>
                 </div>
             </div>
