@@ -33,7 +33,7 @@
             <version>1.21.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-            <dependency>
+        <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.6</version>
@@ -50,9 +50,9 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <includes>
-                        <include>com/pn86/pnvip/**</include>
-                    </includes>
+                    <excludes>
+                        <exclude>com/pn86/pnseen/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

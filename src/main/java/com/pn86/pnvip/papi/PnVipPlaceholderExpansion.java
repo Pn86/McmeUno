@@ -38,7 +38,7 @@ public class PnVipPlaceholderExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String params) {
-        if (player == null || player.getUniqueId() == null) {
+        if (player == null || player.getUniqueId() == null || params == null) {
             return "";
         }
 
@@ -49,7 +49,7 @@ public class PnVipPlaceholderExpansion extends PlaceholderExpansion {
 
         Map.Entry<String, Long> current = record.getVipExpireAt().entrySet().stream()
                 .filter(e -> e.getValue() <= 0 || e.getValue() > System.currentTimeMillis())
-                .max(Comparator.comparingLong(Map.Entry::getValue))
+                .max(Comparator.comparingLong(e -> e.getValue() <= 0 ? Long.MAX_VALUE : e.getValue()))
                 .orElse(null);
 
         if (current == null) {
