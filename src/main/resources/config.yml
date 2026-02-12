@@ -1,15 +1,41 @@
+time-units:
+  s: 1
+  m: 60
+  d: 86400
+  秒: 1
+  分钟: 60
+  天: 86400
+
+format:
+  permanent: "&a永久"
+
 messages:
-  prefix: "&7[&aPnSeen&7] "
-  no-permission: "&c你没有权限使用此命令。"
-  reload-success: "&a配置文件已重载。"
-  usage-seen: "&c用法: /seen <玩家名|UUID>"
-  usage-reload: "&c用法: /pnseen reload"
-  player-not-found: "&c未找到该玩家。"
-  info:
-    name: "&f玩家名：&a%name%"
-    uuid: "&f玩家UUID：&a%uuid%"
-    playtime: "&f玩家累计在线时间：&a%playtime%"
-    offline: "&f玩家离线了 &a%offline%&f（玩家上线了 &a%online%&f）"
-    online: "&f玩家上线了 &a%online%"
-    location: "&f玩家位置: &a%x% %y% %z% (%world%)"
-    ip: "&f玩家IP: &a%ip%"
+  player-only: "&c该命令只能由玩家执行。"
+  reload-success: "&aPnVIP 配置已重载。"
+
+  admin-usage:
+    - "&e/pnvip reload"
+    - "&e/pnvip add [玩家] [会员名称] [时间] [时间单位]"
+    - "&e/pnvip remove [玩家] [会员名称]"
+    - "&e/pnvip clear [玩家]"
+
+  add-usage: "&e用法: /pnvip add [玩家] [会员名称] [时间] [时间单位]"
+  remove-usage: "&e用法: /pnvip remove [玩家] [会员名称]"
+  clear-usage: "&e用法: /pnvip clear [玩家]"
+
+  player-not-found: "&c玩家不存在或从未进服。"
+  vip-not-found: "&c会员名称不存在，请检查 vip.yml。"
+  time-invalid: "&c时间或单位无效。可用单位: %units%"
+
+  add-success: "&a已给予 &f%player% &a会员 %vip% &a，到期: &f%expire%"
+  remove-success: "&a已删除 &f%player% &a的会员 &f%vip%"
+  remove-fail: "&c删除失败：玩家没有这个会员。"
+  clear-success: "&a已清空 &f%player% &a的全部会员。"
+  clear-fail: "&c清空失败：玩家没有任何会员。"
+
+  vip-header: "&6你的会员信息："
+  vip-line: "&e- %vip% &7| 到期时间: &f%expire%"
+  vip-empty: "&c你当前没有任何会员。"
+
+  signin-success: "&a签到成功，奖励已发放。"
+  signin-none: "&e没有可签到的会员，或今日已签到。"

@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.pn86</groupId>
-    <artifactId>pnseen</artifactId>
+    <artifactId>pnvip</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>PnSeen</name>
-    <description>PnSeen plugin for Paper 1.21.1</description>
+    <name>PnVIP</name>
+    <description>PnVIP plugin for Paper 1.21.1</description>
 
     <properties>
         <java.version>17</java.version>
@@ -20,6 +20,10 @@
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -27,6 +31,12 @@
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.21.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+            <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.6</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -40,6 +50,9 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <includes>
+                        <include>com/pn86/pnvip/**</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,8 @@
+vip:
+  name: "&e&l会员"
+  per:
+    - "fly.use"
+  signin:
+    - "give %player% diamond 64"
+  gift:
+    - "give %player% diamond 16"
