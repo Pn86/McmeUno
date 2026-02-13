@@ -1,0 +1,14 @@
+name: PnTimeWorks
+version: 1.0.0
+main: com.pn86.pntimeworks.PnTimeWorksPlugin
+api-version: '1.21'
+author: Pn86
+commands:
+  pntws:
+    description: PnTimeWorks main command
+    usage: /pntws <reload|list>
+    permission: pntimeworks.admin
+permissions:
+  pntimeworks.admin:
+    description: Access PnTimeWorks admin commands
+    default: op
