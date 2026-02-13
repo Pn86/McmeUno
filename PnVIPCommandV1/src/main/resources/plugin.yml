@@ -1,0 +1,51 @@
+name: PnVIPCommandV1
+version: 1.0.0
+main: cn.pn86.pnvipcommand.PnVIPCommandV1Plugin
+api-version: '1.21'
+author: Pn86
+
+commands:
+  pnvc:
+    description: 重载 PnVIPCommandV1
+    usage: /pnvc reload
+    permission: pnvipcommand.reload
+  ptp:
+    description: 传送到玩家
+    usage: /ptp <玩家名>
+    permission: pnvipcommand.tp
+  pgive:
+    description: 给予自己 64 个物品
+    usage: /pgive <物品ID>
+    permission: pnvipcommand.give
+  ptime:
+    description: 设置当前世界时间
+    usage: /ptime <day|night>
+    permission: pnvipcommand.time
+  pweather:
+    description: 设置当前世界天气
+    usage: /pweather <clear|rain|thunder>
+    permission: pnvipcommand.weather
+  pexp:
+    description: 获得 1000 级经验
+    usage: /pexp
+    permission: pnvipcommand.exp
+
+permissions:
+  pnvipcommand.reload:
+    description: 允许重载插件
+    default: op
+  pnvipcommand.tp:
+    description: 允许使用 /ptp
+    default: op
+  pnvipcommand.give:
+    description: 允许使用 /pgive
+    default: op
+  pnvipcommand.time:
+    description: 允许使用 /ptime
+    default: op
+  pnvipcommand.weather:
+    description: 允许使用 /pweather
+    default: op
+  pnvipcommand.exp:
+    description: 允许使用 /pexp
+    default: op

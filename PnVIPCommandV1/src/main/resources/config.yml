@@ -1,0 +1,56 @@
+cooldowns:
+  ptp: 30
+  pgive: 60
+  ptime: 60
+  pweather: 60
+  pexp: 120
+
+# /ptp 不能传送到这些玩家
+tp_player_whitelist:
+  - Admin
+  - Owner
+
+
+# /ptime 仅允许在这些世界使用（留空表示所有世界都允许）
+time_world_whitelist:
+  - world
+
+# /pweather 仅允许在这些世界使用（留空表示所有世界都允许）
+weather_world_whitelist:
+  - world
+
+# /pgive 不能获取这些物品ID（使用 Material 名称）
+give_item_blacklist:
+  - COMMAND_BLOCK
+  - CHAIN_COMMAND_BLOCK
+  - REPEATING_COMMAND_BLOCK
+  - BARRIER
+  - BEDROCK
+
+messages:
+  no_permission: "&c你没有权限使用此指令。"
+  player_only: "&c该指令只能由玩家执行。"
+  reload_success: "&aPnVIPCommandV1 配置已重载。"
+  pnvc_usage: "&c用法: /pnvc reload"
+  cooldown: "&e冷却中，请等待 &6%seconds% &e秒后再使用。"
+
+  ptp_usage: "&c用法: /ptp <玩家名>"
+  target_offline: "&c目标玩家不在线。"
+  ptp_target_whitelisted: "&c该玩家在传送保护白名单中，不能传送。"
+  ptp_success: "&a已传送到玩家 &e%player%&a。"
+
+  pgive_usage: "&c用法: /pgive <物品ID>"
+  pgive_simple_id_only: "&c只能填写纯物品ID，不能填写NBT或其他参数。"
+  invalid_item: "&c无效的物品ID。"
+  pgive_item_blacklisted: "&c该物品在黑名单中，不能获取。"
+  pgive_success: "&a已给予你 &e64 &a个 &e%item%&a。"
+
+  ptime_usage: "&c用法: /ptime <day|night>"
+  ptime_world_not_allowed: "&c当前世界 &e%world% &c不在 /ptime 白名单中。"
+  ptime_success: "&a当前世界时间已设置为 &e%type%&a。"
+
+  pweather_usage: "&c用法: /pweather <clear|rain|thunder>"
+  pweather_world_not_allowed: "&c当前世界 &e%world% &c不在 /pweather 白名单中。"
+  pweather_success: "&a当前世界天气已设置为 &e%type%&a。"
+
+  pexp_success: "&a你已获得 &e%levels% &a级经验。"
