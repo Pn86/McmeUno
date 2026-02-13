@@ -1,7 +1,0 @@
-messages:
-  prefix: '&8[&bPnTimeWorks&8] '
-  no-permission: '&c你没有权限执行这个命令。'
-  usage: '&e用法: /pntws <reload|list>'
-  reload-success: '&aPnTimeWorks 配置重载完成。'
-  list-header: '&a当前已加载操作组数量: &f{count}'
-  work-executed-broadcast: '&e定时操作组 &b{group} &e已执行，共 &a{count} &e条指令。'

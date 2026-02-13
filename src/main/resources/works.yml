@@ -1,6 +1,0 @@
-1:
-  time:
-    - '0;13:00'
-  action:
-    - 'say 这是一个示例定时任务'
-    - 'time set day'
