@@ -1,9 +1,0 @@
-level:
-  10:
-    message: '&e恭喜升级10级！'
-    action:
-      - 'eco give %player_name% 1000'
-all:
-  message: '&e恭喜升级一级了，再接再厉'
-  action:
-    - 'eco give %player_name% 100'
