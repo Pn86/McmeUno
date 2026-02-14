@@ -1,0 +1,86 @@
+messages:
+  reload:
+    message:
+      enable: true
+      text: '&aPnLevel 配置已重载。'
+    title:
+      enable: false
+      text: ''
+    subtitle:
+      enable: false
+      text: ''
+
+  player-not-found:
+    message: { enable: true, text: '&c找不到该玩家数据。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  admin-updated:
+    message: { enable: true, text: '&a玩家数据已更新。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  admin-reset:
+    message: { enable: true, text: '&a玩家数据已重置。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  level-up:
+    message: { enable: true, text: '&6恭喜你升级到了 &e%level% &6级！' }
+    title: { enable: false, text: '&6升级成功' }
+    subtitle: { enable: false, text: '&e当前等级 %level%' }
+
+  gift-available:
+    message: { enable: true, text: '&a你有新的等级奖励可领取，使用 /levelgift 打开菜单。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  exp-add:
+    message: { enable: true, text: '&a已获得 %exp% 点经验。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  exp-now:
+    message: { enable: true, text: '&7当前经验: &b%exp%&7/&f%need%' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  self-info:
+    message: { enable: true, text: '&e你的等级: &6%level% &7| &e经验: &b%exp% &7| &e距离下一级: &f%need%' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  gift-none:
+    message: { enable: true, text: '&7当前没有可领取的等级奖励。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  gift-claimed:
+    message: { enable: true, text: '&a成功领取 %count% 个等级奖励。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  gift-level-claimed:
+    message: { enable: true, text: '&a成功领取等级 %level% 的奖励。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  gift-already-claimed:
+    message: { enable: true, text: '&7该等级奖励已经领取过了。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  gift-locked:
+    message: { enable: true, text: '&c该等级奖励未解锁，需达到等级 %level%。' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  bar-filled:
+    message: { enable: true, text: '■' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
+
+  bar-empty:
+    message: { enable: true, text: '□' }
+    title: { enable: false, text: '' }
+    subtitle: { enable: false, text: '' }
