@@ -1,0 +1,19 @@
+max-level: 100
+initial-level: 1
+initial-exp: 0
+
+level-exp:
+  default: 100
+  increment: 10
+  custom:
+    '10': 250
+    '20': 500
+
+level-tags:
+  '1-10': '&7☆ '
+  '11-20': '&f★ '
+  '21-50': '&6✦ '
+  '51-100': '&c✪ '
+
+menu:
+  return-command: "spawn"
