@@ -1,8 +1,0 @@
-up1:
-  type: 'time'
-  int:
-    - '300'
-  upexp: '10'
-  message: '&6在线奖励已发放 +10经验'
-  title: ''
-  subtitle: ''
