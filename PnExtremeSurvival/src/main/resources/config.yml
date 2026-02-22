@@ -1,0 +1,19 @@
+game:
+  world: world
+  default-mode: solo
+  waiting:
+    min-players: 8
+    max-players: 32
+    countdown: 60
+    full-countdown: 15
+  start:
+    max-health: 40.0
+    invincible-seconds: 120
+  border:
+    start-size: 1000
+    end-size: 16
+    shrink-seconds: 1800
+  multiplayer:
+    team-size: 3
+  end:
+    auto-reset-seconds: 30

@@ -1,0 +1,41 @@
+player:
+  join: "<green>你已加入本局游戏。"
+  leave: "<red>你已退出本局游戏，当前将以旁观者身份观看。"
+
+game:
+  countdown:
+    start: "<yellow>人数达到要求，倒计时开始：<gold>{seconds}</gold> 秒"
+    cancel: "<red>人数不足，倒计时已取消。"
+    ticking: "<yellow>游戏将在 <gold>{seconds}</gold> 秒后开始"
+  start: "<green><bold>PnExtremeSurvival 开始！"
+  invincible:
+    ticking: "<aqua>无敌时间剩余 <white>{seconds}</white> 秒"
+  shrink:
+    start: "<red><bold>无敌结束！开始缩圈！"
+  end:
+    winner: "<gold><bold>胜利者：</bold> <yellow>{winner}"
+    no-winner: "<gray>本局没有胜利者。"
+  force-stop: "<red>游戏已被管理员强制结束并恢复默认状态。"
+  reset:
+    kick: "<red>地图重置中，服务器即将关闭，请稍后重进。"
+
+title:
+  start: "<green><bold>极限生存开始"
+  invincible: "<yellow>无敌时间 {seconds} 秒"
+
+actionbar:
+  status: "<gray>X:{x} Y:{y} Z:{z} <dark_gray>| <red>离中心:{distance} <dark_gray>| <yellow>{danger}"
+
+sounds:
+  game-start: "EVENT_RAID_HORN"
+
+scoreboard:
+  title: "<gold><bold>PnExtremeSurvival"
+  lines:
+    - "&7状态: &f{state}"
+    - "&7模式: &f{mode}"
+    - "&7存活: &a{alive}"
+    - "&7参与: &f{players}"
+    - "&7阶段时间: &e{timer}s"
+    - "&7边界: &c{border}"
+    - "&7缩圈进度: &6{progress}%"
