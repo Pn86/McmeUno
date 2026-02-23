@@ -1,0 +1,16 @@
+name: PnSpeedLimit
+version: 1.0.0
+main: uno.mcme.pnspeedlimit.PnSpeedLimitPlugin
+api-version: '1.21'
+author: Pn86
+softdepend:
+  - PlaceholderAPI
+commands:
+  pnsl:
+    description: PnSpeedLimit 管理命令
+    usage: /pnsl <whitelist|limit|use|reload>
+    permission: pnspeedlimit.admin
+permissions:
+  pnspeedlimit.admin:
+    description: 使用 PnSpeedLimit 管理命令
+    default: op
