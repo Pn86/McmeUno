@@ -1,0 +1,51 @@
+settings:
+  enabled: true
+
+limits:
+  # 全局总上限，all 会与各类别上限取更小值
+  all: 25.0
+  # 普通移动限速（m/s）
+  move: 10.0
+  # 飞行/鞘翅/滑翔限速（m/s）
+  fly: 30.0
+  # 击退与爆炸推动限速（m/s）
+  repel: 22.0
+
+warning:
+  # 达到限速百分比时警告，例如 0.8=80%
+  percent: 0.8
+  # 警告冷却时间（毫秒）
+  cooldown-ms: 3000
+  messages:
+    - "&e[PnSL] 你当前速度为 &f%speed%&e，已接近上限 &f%limit%m/s&e（类型：%type%）"
+
+punishment:
+  # 超速后由后台执行的命令，支持占位符：
+  # %player% %speed% %speednum% %limit% %type%
+  commands:
+    - "tellraw %player% {\"text\":\"[PnSL] 你已超速，速度=%speed%，上限=%limit%m/s，类型=%type%\",\"color\":\"red\"}"
+
+# 白名单玩家（不受限制）
+whitelist:
+  - "Pn86"
+
+messages:
+  help: "&6/pnsl whitelist [add/remove] [玩家名] &f- 添加或去除白名单\n&6/pnsl limit [all/move/fly/repel] [速度值] &f- 修改限速\n&6/pnsl use [on/off] &f- 开关限速\n&6/pnsl reload &f- 重载插件"
+  reload: "&a[PnSL] 配置已重载。"
+  whitelist-usage: "&c用法: /pnsl whitelist [add/remove] [玩家名]"
+  whitelist-added: "&a[PnSL] 已添加白名单玩家: %target%"
+  whitelist-removed: "&a[PnSL] 已移除白名单玩家: %target%"
+  limit-usage: "&c用法: /pnsl limit [all/move/fly/repel] [速度值]"
+  limit-updated: "&a[PnSL] 已更新 %type% 限速为 %value%m/s"
+  invalid-number: "&c请输入正确的数字速度值。"
+  use-usage: "&c用法: /pnsl use [on/off]"
+  use-on: "&a[PnSL] 已开启玩家速度限制。"
+  use-off: "&e[PnSL] 已关闭玩家速度限制。"
+
+placeholders:
+  # PlaceholderAPI 变量（标识符 pnsl）：
+  # %pnsl_speed%    -> 玩家速度（XXm/s）
+  # %pnsl_speednum% -> 玩家速度（数字）
+  # %pnsl_limit%    -> 玩家当前状态限速值
+  # %pnsl_type%     -> 玩家当前速度状态(move/fly/repel)
+  enabled: true
