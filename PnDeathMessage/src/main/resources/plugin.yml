@@ -1,0 +1,16 @@
+name: PnDeathMessage
+version: 1.0.0
+main: cn.pn86.pndeathmessage.PnDeathMessagePlugin
+api-version: '1.21'
+author: Pn86
+
+commands:
+  pndm:
+    description: 重载 PnDeathMessage
+    usage: /pndm reload
+    permission: pndeathmessage.reload
+
+permissions:
+  pndeathmessage.reload:
+    description: 允许重载 PnDeathMessage
+    default: op

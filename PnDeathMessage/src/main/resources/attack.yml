@@ -1,0 +1,13 @@
+# 攻击实体名称配置
+# 显示变量: %attack%
+# 插件启动后会自动补全 EntityType 全部ID到 names 下。
+# 注意: 玩家击杀时不读取本文件，永远显示玩家真实名字。
+none: '未知来源'
+
+names:
+  ZOMBIE: '僵尸'
+  SKELETON: '骷髅'
+  CREEPER: '苦力怕'
+  SPIDER: '蜘蛛'
+  ENDERMAN: '末影人'
+  WARDEN: '监守者'

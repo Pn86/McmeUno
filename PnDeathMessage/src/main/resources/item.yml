@@ -1,0 +1,13 @@
+# 物品名称配置
+# 显示变量: %item%
+# 插件启动后会自动补全 Material 全部ID到 names 下。
+none: '空手'
+
+names:
+  WOODEN_SWORD: '木剑'
+  IRON_SWORD: '铁剑'
+  DIAMOND_SWORD: '钻石剑'
+  NETHERITE_SWORD: '下界合金剑'
+  BOW: '弓'
+  CROSSBOW: '弩'
+  TRIDENT: '三叉戟'
