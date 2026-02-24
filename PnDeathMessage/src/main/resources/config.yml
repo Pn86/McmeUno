@@ -1,0 +1,213 @@
+# PnDeathMessage by Pn86
+# 可用变量:
+# %player% - 死亡玩家
+# %attack% - 攻击实体/生物(有命名优先显示命名)
+# %item%   - 攻击者手持物品(有自定义名优先显示)
+
+# 支持随机文本（message/title/subtitle 都可用）:
+# message:
+#   - '&e%player%&f 死亡信息1'
+#   - '&e%player%&f 死亡信息2'
+# 默认每个死亡方式仅提供 1 条。
+
+broadcast:
+  enabled: true
+
+deathmessage:
+  # 默认
+  DEFAULT:
+    message: '&e%player%&f 死亡了'
+    title: 'none'
+    subtitle: 'none'
+
+  # CONTACT - 仙人掌
+  CONTACT:
+    message: '&e%player%&f 被扎成了刺猬'
+    title: 'none'
+    subtitle: 'none'
+
+  # ENTITY_ATTACK - 生物/玩家近战攻击
+  ENTITY_ATTACK:
+    message: '&e%player%&f 被 &c%attack%&f 击杀了'
+    title: 'none'
+    subtitle: 'none'
+
+  # ENTITY_SWEEP_ATTACK - 横扫攻击
+  ENTITY_SWEEP_ATTACK:
+    message: '&e%player%&f 被 &c%attack%&f 横扫击杀'
+    title: 'none'
+    subtitle: 'none'
+
+  # PROJECTILE - 投射物
+  PROJECTILE:
+    message: '&e%player%&f 被 &c%attack%&f 使用 &6%item%&f 射杀'
+    title: 'none'
+    subtitle: 'none'
+
+  # SUFFOCATION - 窒息
+  SUFFOCATION:
+    message: '&e%player%&f 在墙里窒息了'
+    title: 'none'
+    subtitle: 'none'
+
+  # FALL - 摔落
+  FALL:
+    message: '&e%player%&f 从高处坠落'
+    title: 'none'
+    subtitle: 'none'
+
+  # FIRE - 着火
+  FIRE:
+    message: '&e%player%&f 着火了'
+    title: 'none'
+    subtitle: 'none'
+
+  # FIRE_TICK - 持续火焰伤害
+  FIRE_TICK:
+    message: '&e%player%&f 被烧成了灰'
+    title: 'none'
+    subtitle: 'none'
+
+  # MELTING - 融化(雪球/雪傀儡)
+  MELTING:
+    message: '&e%player%&f 融化了'
+    title: 'none'
+    subtitle: 'none'
+
+  # LAVA - 岩浆
+  LAVA:
+    message: '&e%player%&f 在岩浆里游泳失败了'
+    title: 'none'
+    subtitle: 'none'
+
+  # DROWNING - 溺水
+  DROWNING:
+    message: '&e%player%&f 淹死了'
+    title: 'none'
+    subtitle: 'none'
+
+  # BLOCK_EXPLOSION - 方块爆炸
+  BLOCK_EXPLOSION:
+    message: '&e%player%&f 被爆炸送上了天'
+    title: 'none'
+    subtitle: 'none'
+
+  # ENTITY_EXPLOSION - 实体爆炸
+  ENTITY_EXPLOSION:
+    message: '&e%player%&f 被 &c%attack%&f 炸飞了'
+    title: 'none'
+    subtitle: 'none'
+
+  # VOID - 虚空
+  VOID:
+    message: '&e%player%&f 掉入了虚空'
+    title: 'none'
+    subtitle: 'none'
+
+  # LIGHTNING - 雷击
+  LIGHTNING:
+    message: '&e%player%&f 被雷劈中了'
+    title: 'none'
+    subtitle: 'none'
+
+  # SUICIDE - 自杀
+  SUICIDE:
+    message: '&e%player%&f 结束了自己'
+    title: 'none'
+    subtitle: 'none'
+
+  # STARVATION - 饥饿
+  STARVATION:
+    message: '&e%player%&f 饿死了'
+    title: 'none'
+    subtitle: 'none'
+
+  # POISON - 中毒
+  POISON:
+    message: '&e%player%&f 中毒身亡'
+    title: 'none'
+    subtitle: 'none'
+
+  # MAGIC - 魔法伤害
+  MAGIC:
+    message: '&e%player%&f 被魔法杀死了'
+    title: 'none'
+    subtitle: 'none'
+
+  # WITHER - 凋零
+  WITHER:
+    message: '&e%player%&f 凋零而亡'
+    title: 'none'
+    subtitle: 'none'
+
+  # FALLING_BLOCK - 掉落方块
+  FALLING_BLOCK:
+    message: '&e%player%&f 被掉落方块砸死'
+    title: 'none'
+    subtitle: 'none'
+
+  # THORNS - 荆棘
+  THORNS:
+    message: '&e%player%&f 被荆棘反伤击杀'
+    title: 'none'
+    subtitle: 'none'
+
+  # DRAGON_BREATH - 龙息
+  DRAGON_BREATH:
+    message: '&e%player%&f 死于龙息'
+    title: 'none'
+    subtitle: 'none'
+
+  # CUSTOM - 自定义来源
+  CUSTOM:
+    message: '&e%player%&f 以未知方式死亡'
+    title: 'none'
+    subtitle: 'none'
+
+  # FLY_INTO_WALL - 鞘翅撞墙
+  FLY_INTO_WALL:
+    message: '&e%player%&f 飞行时撞墙了'
+    title: 'none'
+    subtitle: 'none'
+
+  # HOT_FLOOR - 岩浆块/热地板
+  HOT_FLOOR:
+    message: '&e%player%&f 被烫脚了'
+    title: 'none'
+    subtitle: 'none'
+
+  # CRAMMING - 实体拥挤
+  CRAMMING:
+    message: '&e%player%&f 被挤压致死'
+    title: 'none'
+    subtitle: 'none'
+
+  # DRYOUT - 脱水
+  DRYOUT:
+    message: '&e%player%&f 脱水而亡'
+    title: 'none'
+    subtitle: 'none'
+
+  # FREEZE - 冻伤
+  FREEZE:
+    message: '&e%player%&f 被冻死了'
+    title: 'none'
+    subtitle: 'none'
+
+  # SONIC_BOOM - 监守者音波
+  SONIC_BOOM:
+    message: '&e%player%&f 被音波震碎了'
+    title: 'none'
+    subtitle: 'none'
+
+  # KILL - /kill 指令或系统击杀
+  KILL:
+    message: '&e%player%&f 被系统抹除'
+    title: 'none'
+    subtitle: 'none'
+
+  # WORLD_BORDER - 世界边界
+  WORLD_BORDER:
+    message: '&e%player%&f 触碰世界边界而死'
+    title: 'none'
+    subtitle: 'none'
