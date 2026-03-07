@@ -4,18 +4,20 @@ defaults:
   required-tool: BRUSH
   brushing-duration-ticks: 40
   command-loot-display-item: DIAMOND
+  opened-block:
+    sand: SAND
+    gravel: GRAVEL
 
 messages:
   no-permission: "&c你没有权限执行该指令。"
   player-only: "&e该指令只能由玩家执行。"
-  help: "&7用法: /pngp creat [ID] | move | delete | skin | additem | listitem | removeitem | resettime | list | look | reload"
   usage-create: "&7用法: /pngp creat [ID]"
   usage-move: "&7用法: /pngp move [ID]"
   usage-delete: "&7用法: /pngp delete [ID]"
   usage-skin: "&7用法: /pngp skin [ID] [gravel/sand]"
-  usage-additem: "&7用法: /pngp additem [ID] [自定义物品ID] [权重(可选)] [指令(可选)]"
+  usage-additem: "&7用法: /pngp additem [ID] [自定义物品ID] [权重(可选,默认0)] [指令(可选)]"
   usage-listitem: "&7用法: /pngp listitem [ID]"
-  usage-removeitem: "&7用法: /pngp removeitem [ID] [物品ID]"
+  usage-removeitem: "&7用法: /pngp removeitem [ID] [物品ID或唯一键]"
   usage-resettime: "&7用法: /pngp resettime [ID] [时间(秒)]"
   usage-look: "&7用法: /pngp look [ID]"
   invalid-target: "&c请先看向一个有效方块，且上方必须可放置。"
@@ -33,6 +35,6 @@ messages:
   additem-success: "&a战利品添加成功。"
   additem-fail: "&c添加战利品失败，操作已取消。"
   removeitem-success: "&a战利品删除成功。"
-  removeitem-fail: "&c删除失败，请确认ID是否正确。"
+  removeitem-fail: "&c删除失败，请确认ID或唯一键是否正确。"
   resettime-success: "&a自动重置时间设置成功。"
   reload-success: "&a插件重载完成，所有淘金方块状态已重置。"

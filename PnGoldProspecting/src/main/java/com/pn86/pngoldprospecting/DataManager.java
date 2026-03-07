@@ -13,11 +13,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 public class DataManager {
     private final JavaPlugin plugin;
@@ -71,23 +73,24 @@ public class DataManager {
 
             ConfigurationSection loots = cfg.getConfigurationSection("loots");
             if (loots != null) {
-                for (String lootId : loots.getKeys(false)) {
-                    ConfigurationSection lootSec = loots.getConfigurationSection(lootId);
+                for (String lootKey : loots.getKeys(false)) {
+                    ConfigurationSection lootSec = loots.getConfigurationSection(lootKey);
                     if (lootSec == null) {
                         continue;
                     }
+                    String itemId = lootSec.getString("item-id", lootKey);
                     ItemStack item = lootSec.getItemStack("item");
                     String command = lootSec.getString("command");
-                    int weight = Math.max(1, lootSec.getInt("weight", 1));
+                    int weight = Math.max(0, lootSec.getInt("weight", 0));
                     if ((item == null || item.getType().isAir()) && (command == null || command.isBlank())) {
                         continue;
                     }
-                    block.getLoots().put(lootId, new LootEntry(lootId, item, weight, command));
+                    block.getLoots().put(lootKey, new LootEntry(itemId, item, weight, command));
                 }
             }
 
             blocks.put(id, block);
-            applySkin(block);
+            applyCurrentAppearance(block);
             saveBlock(block);
         }
     }
@@ -114,7 +117,7 @@ public class DataManager {
         }
         ProspectingBlock block = new ProspectingBlock(id, location, skin, resetTime);
         blocks.put(id, block);
-        applySkin(block);
+        applyCurrentAppearance(block);
         saveBlock(block);
         return true;
     }
@@ -126,7 +129,7 @@ public class DataManager {
         }
         setBlockAir(block.getLocation());
         block.setLocation(location);
-        applySkin(block);
+        applyCurrentAppearance(block);
         saveBlock(block);
         return true;
     }
@@ -150,7 +153,7 @@ public class DataManager {
             return false;
         }
         block.setSkin(skin);
-        applySkin(block);
+        applyCurrentAppearance(block);
         saveBlock(block);
         return true;
     }
@@ -170,6 +173,7 @@ public class DataManager {
         if (block == null) {
             return false;
         }
+
         ItemStack safeStack = null;
         if (stack != null && !stack.getType().isAir()) {
             safeStack = stack.clone();
@@ -177,26 +181,42 @@ public class DataManager {
         if (safeStack == null && (command == null || command.isBlank())) {
             return false;
         }
-        block.getLoots().put(lootId, new LootEntry(lootId, safeStack, Math.max(1, weight), command));
+
+        String entryKey = lootId + "-" + UUID.randomUUID().toString().substring(0, 8);
+        block.getLoots().put(entryKey, new LootEntry(lootId, safeStack, Math.max(0, weight), command));
         saveBlock(block);
         return true;
     }
 
-    public boolean removeLoot(String id, String lootId) {
+    public boolean removeLoot(String id, String lootIdOrEntryKey) {
         ProspectingBlock block = getBlock(id);
         if (block == null) {
             return false;
         }
-        LootEntry removed = block.getLoots().remove(lootId);
+
+        LootEntry removed = block.getLoots().remove(lootIdOrEntryKey);
+        if (removed == null) {
+            Iterator<Map.Entry<String, LootEntry>> iterator = block.getLoots().entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, LootEntry> entry = iterator.next();
+                if (entry.getValue().itemId().equalsIgnoreCase(lootIdOrEntryKey)) {
+                    iterator.remove();
+                    removed = entry.getValue();
+                    break;
+                }
+            }
+        }
+
         if (removed == null) {
             return false;
         }
+
         saveBlock(block);
         return true;
     }
 
     public Optional<LootEntry> rollLoot(ProspectingBlock block) {
-        int total = block.getLoots().values().stream().mapToInt(LootEntry::weight).sum();
+        int total = block.getLoots().values().stream().mapToInt(entry -> Math.max(0, entry.weight())).sum();
         if (total <= 0) {
             return Optional.empty();
         }
@@ -204,7 +224,7 @@ public class DataManager {
         int value = random.nextInt(total) + 1;
         int cumulative = 0;
         for (LootEntry entry : block.getLoots().values()) {
-            cumulative += entry.weight();
+            cumulative += Math.max(0, entry.weight());
             if (value <= cumulative) {
                 return Optional.of(entry);
             }
@@ -226,8 +246,10 @@ public class DataManager {
         cfg.set("state.opened-at-millis", block.getOpenedAtMillis());
 
         cfg.set("loots", null);
-        for (LootEntry entry : block.getLoots().values()) {
-            String path = "loots." + entry.itemId();
+        for (Map.Entry<String, LootEntry> loot : block.getLoots().entrySet()) {
+            String path = "loots." + loot.getKey();
+            LootEntry entry = loot.getValue();
+            cfg.set(path + ".item-id", entry.itemId());
             cfg.set(path + ".item", entry.itemStack());
             cfg.set(path + ".weight", entry.weight());
             cfg.set(path + ".command", entry.command());
@@ -247,12 +269,16 @@ public class DataManager {
         }
     }
 
-    public void applySkin(ProspectingBlock block) {
+    public void applyCurrentAppearance(ProspectingBlock block) {
         Location loc = block.getLocation();
         if (loc.getWorld() == null) {
             return;
         }
-        loc.getBlock().setType(block.getSkin(), false);
+        if (block.isOpened()) {
+            loc.getBlock().setType(getOpenedMaterial(block.getSkin()), false);
+        } else {
+            loc.getBlock().setType(block.getSkin(), false);
+        }
     }
 
     private void setBlockAir(Location loc) {
@@ -260,6 +286,20 @@ public class DataManager {
             return;
         }
         loc.getBlock().setType(Material.AIR, false);
+    }
+
+    public Material getOpenedMaterial(Material skin) {
+        String path = skin == Material.SUSPICIOUS_GRAVEL ? "defaults.opened-block.gravel" : "defaults.opened-block.sand";
+        String configured = plugin.getConfig().getString(path,
+                skin == Material.SUSPICIOUS_GRAVEL ? "GRAVEL" : "SAND");
+        if (configured == null || configured.isBlank()) {
+            return skin == Material.SUSPICIOUS_GRAVEL ? Material.GRAVEL : Material.SAND;
+        }
+        try {
+            return Material.valueOf(configured.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            return skin == Material.SUSPICIOUS_GRAVEL ? Material.GRAVEL : Material.SAND;
+        }
     }
 
     public Optional<Material> parseSkin(String input) {

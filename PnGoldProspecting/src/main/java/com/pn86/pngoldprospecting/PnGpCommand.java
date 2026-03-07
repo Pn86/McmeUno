@@ -1,6 +1,7 @@
 package com.pn86.pngoldprospecting;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -9,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,12 +36,23 @@ public class PnGpCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(plugin.msg("help"));
+            sendHelp(sender, 1);
             return true;
         }
 
         String sub = args[0].toLowerCase(Locale.ROOT);
         switch (sub) {
+            case "help" -> {
+                int page = 1;
+                if (args.length >= 2) {
+                    try {
+                        page = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException ignored) {
+                        page = 1;
+                    }
+                }
+                sendHelp(sender, page);
+            }
             case "creat", "create" -> handleCreate(sender, args);
             case "move" -> handleMove(sender, args);
             case "delete" -> handleDelete(sender, args);
@@ -51,9 +64,36 @@ public class PnGpCommand implements CommandExecutor, TabCompleter {
             case "list" -> handleList(sender);
             case "look" -> handleLook(sender, args);
             case "reload" -> handleReload(sender);
-            default -> sender.sendMessage(plugin.msg("help"));
+            default -> sendHelp(sender, 1);
         }
         return true;
+    }
+
+    private void sendHelp(CommandSender sender, int page) {
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.text("§6==== PnGoldProspecting 帮助页 (%page%/%max%) ===="));
+        lines.add(Component.text("§e/pngp creat [ID] §7- 创建淘金方块"));
+        lines.add(Component.text("§e/pngp move [ID] §7- 移动淘金方块"));
+        lines.add(Component.text("§e/pngp delete [ID] §7- 删除淘金方块"));
+        lines.add(Component.text("§e/pngp skin [ID] [gravel/sand] §7- 设置外观"));
+        lines.add(Component.text("§e/pngp additem [ID] [自定义物品ID] [权重可选] [指令可选] §7- 添加战利品/命令"));
+        lines.add(Component.text("§e/pngp listitem [ID] §7- 查看战利品(含唯一键、显示名、权重、命令)"));
+        lines.add(Component.text("§e/pngp removeitem [ID] [物品ID或唯一键] §7- 删除战利品"));
+        lines.add(Component.text("§e/pngp resettime [ID] [秒] §7- 设置自动重置时间"));
+        lines.add(Component.text("§e/pngp list §7- 查看全部淘金方块"));
+        lines.add(Component.text("§e/pngp look [ID] §7- 查看方块详情"));
+        lines.add(Component.text("§e/pngp reload §7- 重载配置与数据并重置状态"));
+
+        int pageSize = 6;
+        int maxPage = Math.max(1, (int) Math.ceil((lines.size() - 1) / (double) pageSize));
+        int normalized = Math.min(Math.max(1, page), maxPage);
+
+        sender.sendMessage(Component.text("§6==== PnGoldProspecting 帮助页 (" + normalized + "/" + maxPage + ") ===="));
+        int start = 1 + (normalized - 1) * pageSize;
+        int end = Math.min(lines.size(), start + pageSize);
+        for (int i = start; i < end; i++) {
+            sender.sendMessage(lines.get(i));
+        }
     }
 
     private void handleCreate(CommandSender sender, String[] args) {
@@ -141,7 +181,7 @@ public class PnGpCommand implements CommandExecutor, TabCompleter {
         String blockId = args[1];
         String lootId = args[2];
 
-        int weight = 1;
+        int weight = 0;
         String commandText = null;
         if (args.length >= 4) {
             try {
@@ -177,12 +217,27 @@ public class PnGpCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(plugin.msg("id-not-found"));
             return;
         }
+
         sender.sendMessage(Component.text("----- " + block.getId() + " loot -----"));
-        for (LootEntry entry : block.getLoots().values()) {
-            String desc = entry.itemStack() == null ? "COMMAND_ONLY" : entry.itemStack().getType().name();
+        for (Map.Entry<String, LootEntry> kv : block.getLoots().entrySet()) {
+            LootEntry entry = kv.getValue();
+            String displayName = getItemDisplayName(entry);
             String commandState = entry.isCommandLoot() ? " | command=" + entry.command() : "";
-            sender.sendMessage(Component.text(entry.itemId() + " | " + desc + " | weight=" + entry.weight() + commandState));
+            sender.sendMessage(Component.text("key=" + kv.getKey() + " | id=" + entry.itemId() + " | name=" + displayName + " | weight=" + entry.weight() + commandState));
         }
+    }
+
+    private String getItemDisplayName(LootEntry entry) {
+        if (entry.itemStack() == null || entry.itemStack().getType().isAir()) {
+            return "命令战利品";
+        }
+
+        ItemMeta meta = entry.itemStack().getItemMeta();
+        if (meta != null && meta.hasDisplayName() && meta.displayName() != null) {
+            return PlainTextComponentSerializer.plainText().serialize(meta.displayName());
+        }
+
+        return entry.itemStack().getType().name();
     }
 
     private void handleRemoveItem(CommandSender sender, String[] args) {
@@ -253,7 +308,7 @@ public class PnGpCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
-            return filter(args[0], List.of("creat", "move", "delete", "skin", "additem", "listitem", "removeitem", "resettime", "list", "look", "reload"));
+            return filter(args[0], List.of("help", "creat", "move", "delete", "skin", "additem", "listitem", "removeitem", "resettime", "list", "look", "reload"));
         }
         if (args.length == 2 && List.of("move", "delete", "skin", "additem", "listitem", "removeitem", "resettime", "look").contains(args[0].toLowerCase(Locale.ROOT))) {
             return filter(args[1], new ArrayList<>(dataManager.getBlocks().keySet()));

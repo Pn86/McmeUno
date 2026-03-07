@@ -42,7 +42,7 @@ public class PnGoldProspectingPlugin extends JavaPlugin {
                 boolean wasOpened = block.isOpened();
                 block.tickReset();
                 if (wasOpened && !block.isOpened()) {
-                    dataManager.applySkin(block);
+                    dataManager.applyCurrentAppearance(block);
                     dataManager.saveBlock(block);
                 }
             }

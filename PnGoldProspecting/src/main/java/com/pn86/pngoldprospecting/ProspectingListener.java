@@ -2,10 +2,12 @@ package com.pn86.pngoldprospecting;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,6 +24,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -94,28 +97,28 @@ public class ProspectingListener implements Listener {
             public void run() {
                 Player p = Bukkit.getPlayer(playerId);
                 if (p == null || !p.isOnline()) {
-                    stop(false);
+                    stop();
                     return;
                 }
 
                 if (!isHoldingRequiredTool(p)) {
-                    stop(false);
+                    stop();
                     return;
                 }
 
                 ProspectingBlock latestBlock = dataManager.getBlock(block.getId());
                 if (latestBlock == null || latestBlock.isOpened()) {
-                    stop(false);
+                    stop();
                     return;
                 }
 
                 Block target = p.getTargetBlockExact(6);
                 if (target == null || !isSameBlock(target, latestBlock.getLocation())) {
-                    stop(false);
+                    stop();
                     return;
                 }
 
-                spawnBrushParticle(target, latestBlock.getSkin());
+                spawnBrushParticle(target, latestBlock.getSkin(), p);
                 if (step % 4 == 0) {
                     target.getWorld().playSound(target.getLocation(), Sound.ITEM_BRUSH_BRUSHING_GENERIC, 0.8f, 1.0f);
                 }
@@ -123,20 +126,16 @@ public class ProspectingListener implements Listener {
                 step++;
                 if (step >= needSteps) {
                     finishProspecting(p, latestBlock, target);
-                    stop(true);
+                    stop();
                 }
             }
 
-            private void stop(boolean completed) {
+            private void stop() {
                 BukkitTask running = brushingTasks.remove(playerId);
                 if (running != null) {
                     running.cancel();
                 }
                 blockBusyBy.remove(key, playerId);
-                if (!completed) {
-                    Block refreshed = block.getLocation().getBlock();
-                    spawnBrushParticle(refreshed, block.getSkin());
-                }
             }
         }, 0L, period);
 
@@ -145,38 +144,51 @@ public class ProspectingListener implements Listener {
 
     private void finishProspecting(Player player, ProspectingBlock block, Block clicked) {
         Optional<LootEntry> rolled = dataManager.rollLoot(block);
-        if (rolled.isEmpty()) {
-            return;
-        }
+        if (rolled.isPresent()) {
+            LootEntry entry = rolled.get();
+            if (entry.itemStack() != null && !entry.itemStack().getType().isAir()) {
+                Item itemDrop = clicked.getWorld().dropItemNaturally(clicked.getLocation().add(0.5, 1, 0.5), entry.itemStack().clone());
+                itemDrop.setOwner(player.getUniqueId());
+            } else {
+                Material displayMaterial = dataManager.getCommandDisplayMaterial();
+                Item displayDrop = clicked.getWorld().dropItemNaturally(clicked.getLocation().add(0.5, 1, 0.5), new ItemStack(displayMaterial));
+                displayDrop.setCanMobPickup(false);
+                displayDrop.setUnlimitedLifetime(false);
+                displayDrop.setPickupDelay(Integer.MAX_VALUE);
+                Bukkit.getScheduler().runTaskLater(plugin, displayDrop::remove, 30L);
+            }
 
-        LootEntry entry = rolled.get();
-        if (entry.itemStack() != null && !entry.itemStack().getType().isAir()) {
-            Item itemDrop = clicked.getWorld().dropItemNaturally(clicked.getLocation().add(0.5, 1, 0.5), entry.itemStack().clone());
-            itemDrop.setOwner(player.getUniqueId());
-        } else {
-            Material displayMaterial = dataManager.getCommandDisplayMaterial();
-            Item displayDrop = clicked.getWorld().dropItemNaturally(clicked.getLocation().add(0.5, 1, 0.5), new ItemStack(displayMaterial));
-            displayDrop.setCanMobPickup(false);
-            displayDrop.setUnlimitedLifetime(false);
-            displayDrop.setPickupDelay(Integer.MAX_VALUE);
-            Bukkit.getScheduler().runTaskLater(plugin, displayDrop::remove, 30L);
-        }
-
-        if (entry.isCommandLoot()) {
-            String commandText = entry.command().replace("%player%", player.getName());
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandText);
+            if (entry.isCommandLoot()) {
+                String commandText = entry.command().replace("%player%", player.getName());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandText);
+            }
         }
 
         clicked.getWorld().playSound(clicked.getLocation(), Sound.BLOCK_SUSPICIOUS_SAND_BREAK, 1.0f, 1.2f);
         block.setOpened(true);
         block.setOpenedAtMillis(System.currentTimeMillis());
+        dataManager.applyCurrentAppearance(block);
         dataManager.saveBlock(block);
     }
 
-    private void spawnBrushParticle(Block block, Material skin) {
+    private void spawnBrushParticle(Block block, Material skin, Player player) {
         Color color = skin == Material.SUSPICIOUS_SAND ? Color.fromRGB(245, 230, 170) : Color.fromRGB(255, 255, 255);
         Particle.DustOptions dust = new Particle.DustOptions(color, 1.1f);
-        block.getWorld().spawnParticle(Particle.DUST, block.getLocation().add(0.5, 0.9, 0.5), 8, 0.2, 0.15, 0.2, 0.0, dust);
+
+        BlockFace face = faceTowardPlayer(block.getLocation(), player.getLocation());
+        double x = block.getX() + 0.5 + face.getModX() * 0.52;
+        double y = block.getY() + 0.62;
+        double z = block.getZ() + 0.5 + face.getModZ() * 0.52;
+
+        block.getWorld().spawnParticle(Particle.DUST, x, y, z, 12, 0.1, 0.2, 0.1, 0.0, dust);
+    }
+
+    private BlockFace faceTowardPlayer(Location blockLocation, Location playerLocation) {
+        Vector diff = playerLocation.toVector().subtract(blockLocation.toVector().add(new Vector(0.5, 0.5, 0.5)));
+        if (Math.abs(diff.getX()) > Math.abs(diff.getZ())) {
+            return diff.getX() >= 0 ? BlockFace.EAST : BlockFace.WEST;
+        }
+        return diff.getZ() >= 0 ? BlockFace.SOUTH : BlockFace.NORTH;
     }
 
     private boolean isHoldingRequiredTool(Player player) {
@@ -190,7 +202,7 @@ public class ProspectingListener implements Listener {
         return hand.getType() == requiredTool;
     }
 
-    private boolean isSameBlock(Block block, org.bukkit.Location location) {
+    private boolean isSameBlock(Block block, Location location) {
         if (location.getWorld() == null || block.getWorld() == null) {
             return false;
         }
@@ -200,7 +212,7 @@ public class ProspectingListener implements Listener {
                 && block.getZ() == location.getBlockZ();
     }
 
-    private String blockKey(org.bukkit.Location location) {
+    private String blockKey(Location location) {
         if (location.getWorld() == null) {
             return "null:0:0:0";
         }
