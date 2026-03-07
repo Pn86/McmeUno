@@ -2,6 +2,7 @@ defaults:
   skin: sand
   reset-time-seconds: 300
   required-tool: BRUSH
+  brushing-duration-ticks: 40
   command-loot-display-item: DIAMOND
 
 messages:
