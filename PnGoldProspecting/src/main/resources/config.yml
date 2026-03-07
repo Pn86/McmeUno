@@ -1,0 +1,37 @@
+defaults:
+  skin: sand
+  reset-time-seconds: 300
+  required-tool: BRUSH
+  command-loot-display-item: DIAMOND
+
+messages:
+  no-permission: "&c你没有权限执行该指令。"
+  player-only: "&e该指令只能由玩家执行。"
+  help: "&7用法: /pngp creat [ID] | move | delete | skin | additem | listitem | removeitem | resettime | list | look | reload"
+  usage-create: "&7用法: /pngp creat [ID]"
+  usage-move: "&7用法: /pngp move [ID]"
+  usage-delete: "&7用法: /pngp delete [ID]"
+  usage-skin: "&7用法: /pngp skin [ID] [gravel/sand]"
+  usage-additem: "&7用法: /pngp additem [ID] [自定义物品ID] [权重(可选)] [指令(可选)]"
+  usage-listitem: "&7用法: /pngp listitem [ID]"
+  usage-removeitem: "&7用法: /pngp removeitem [ID] [物品ID]"
+  usage-resettime: "&7用法: /pngp resettime [ID] [时间(秒)]"
+  usage-look: "&7用法: /pngp look [ID]"
+  invalid-target: "&c请先看向一个有效方块，且上方必须可放置。"
+  target-not-air: "&c目标方块上方不是空气，已自动取消。"
+  id-exists: "&c该ID已存在，已自动取消操作。"
+  id-not-found: "&c未找到该ID。"
+  create-success: "&a淘金方块创建成功。"
+  create-fail: "&c创建失败。"
+  move-success: "&a淘金方块移动成功。"
+  delete-success: "&a淘金方块删除成功。"
+  invalid-skin: "&c皮肤仅支持 gravel 或 sand。"
+  skin-success: "&a外观设置成功。"
+  hand-empty: "&c请将要添加的战利品拿在主手。"
+  invalid-number: "&c数字格式错误。"
+  additem-success: "&a战利品添加成功。"
+  additem-fail: "&c添加战利品失败，操作已取消。"
+  removeitem-success: "&a战利品删除成功。"
+  removeitem-fail: "&c删除失败，请确认ID是否正确。"
+  resettime-success: "&a自动重置时间设置成功。"
+  reload-success: "&a插件重载完成，所有淘金方块状态已重置。"
