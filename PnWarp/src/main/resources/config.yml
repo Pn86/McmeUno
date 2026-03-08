@@ -1,0 +1,47 @@
+max-warps-per-player: 5
+
+teleport:
+  wait-seconds: 3
+  start-sound: BLOCK_NOTE_BLOCK_PLING
+  cancel-sound: BLOCK_NOTE_BLOCK_BASS
+  success-sound: ENTITY_ENDERMAN_TELEPORT
+
+messages:
+  players-only: "&c只有玩家可以执行此命令。"
+  no-permission: "&c你没有权限执行此操作。"
+  usage-addwarp: "&e用法: /addwarp [地标名] [地标简介] [地标图标(MC物品ID)]"
+  usage-remwarp: "&e用法: /remwarp [地标名]"
+  usage-gowarp: "&e用法: /gowarp [地标名]"
+  usage-pnwp: "&e用法: /pnwp <reload|remwarp|remove|removeall>"
+  usage-pnwp-remwarp: "&e用法: /pnwp remwarp [地标名]"
+  usage-pnwp-remove: "&e用法: /pnwp remove [玩家名]"
+
+  invalid-icon: "&c地标图标无效，请输入合法物品ID。"
+  warp-exists: "&c该地标名已存在。"
+  warp-not-found: "&c未找到该地标。"
+  max-warps-reached: "&c你最多只能创建 {max} 个地标。"
+
+  add-success: "&a地标 &f{warp} &a创建成功。"
+  rem-success: "&a地标 &f{warp} &a已删除。"
+  rem-fail: "&c删除失败，该地标不存在或不属于你。"
+
+  teleport-start: "&a将在 {seconds} 秒后传送到地标 &f{warp}&a，请勿移动。"
+  teleport-cancelled: "&c你移动了，传送已取消。"
+  teleport-success: "&a已传送到地标 &f{warp}&a。"
+
+  reload: "&aPnWarp 配置已重载。"
+  remove-player-success: "&a已删除玩家 &f{player} &a的地标，共 &f{count} &a个。"
+  removeall-confirm: "&c危险操作！请再次输入: /pnwp removeall confirm"
+  removeall-success: "&a已删除全部地标，共 &f{count} &a个。"
+
+default-warps:
+  spawn:
+    name: "主城"
+    description: "服务器主城"
+    icon: COMPASS
+    world: world
+    x: 0
+    y: 80
+    z: 0
+    yaw: 0
+    pitch: 0
