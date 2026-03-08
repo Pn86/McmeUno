@@ -1,0 +1,38 @@
+menu:
+  title: "&8地标菜单"
+
+  warp-item:
+    name: "&a{warp}"
+    lore:
+      - "&7简介: &f{description}"
+      - "&7创建者: &f{owner}"
+      - "&7坐标: &f{world} {x}, {y}, {z}"
+      - ""
+      - "&e点击传送"
+
+  bottom:
+    filler:
+      material: GRAY_STAINED_GLASS_PANE
+      name: " "
+      lore: []
+
+    previous:
+      slot: 45
+      material: ARROW
+      name: "&e上一页"
+      lore:
+        - "&7点击查看上一页"
+
+    close:
+      slot: 49
+      material: BARRIER
+      name: "&c关闭"
+      lore:
+        - "&7点击关闭菜单"
+
+    next:
+      slot: 53
+      material: ARROW
+      name: "&e下一页"
+      lore:
+        - "&7点击查看下一页"

@@ -1,0 +1,28 @@
+name: PnWarp
+version: 1.0.0
+main: cn.pn86.pnwarp.PnWarpPlugin
+api-version: '1.21'
+authors: [Pn86]
+softdepend: [PlaceholderAPI]
+
+commands:
+  addwarp:
+    description: 添加自己的地标
+    usage: /addwarp [地标名] [地标简介] [地标图标(MC物品ID)]
+  remwarp:
+    description: 删除自己的地标
+    usage: /remwarp [地标名]
+  warps:
+    description: 打开地标菜单
+    usage: /warps
+  gowarp:
+    description: 传送到地标
+    usage: /gowarp [地标名]
+  pnwp:
+    description: PnWarp 主命令
+    usage: /pnwp <reload|remwarp|remove|removeall>
+
+permissions:
+  pnwarp.admin:
+    description: PnWarp 管理权限
+    default: op
