@@ -1,0 +1,40 @@
+money:
+  # 读取玩家余额的 PlaceholderAPI 占位符
+  balance-placeholder: "%vault_eco_balance%"
+  # 当商品 action=deduct 时执行以下命令来扣钱
+  deduct-commands:
+    - "eco take %player% %amount%"
+  # 当商品 action=add 时执行以下命令来加钱
+  add-commands:
+    - "eco give %player% %amount%"
+  # 金额显示保留的小数位（仅影响展示与命令变量）
+  scale: 2
+
+messages:
+  prefix: "&8[&6PnMoneyShop&8] &r"
+  no-permission: "&c你没有权限。"
+  player-only: "&c该命令只能玩家使用。"
+  reload: "&a配置已重载。"
+  usage: "&e用法: /pnms reload 或 /pnms buy <商品ID>"
+  shop-disabled: "&c商店未启用。"
+  item-not-found: "&c商品ID不存在。"
+  invalid-price: "&c商品价格配置错误。"
+  placeholder-missing: "&c未检测到 PlaceholderAPI，无法读取余额。"
+  balance-parse-failed: "&c无法识别你的余额格式，购买失败。"
+  not-enough: "&c余额不足，需要 &e%price%&c，当前 &e%balance%"
+  buy-success: "&a购买成功，花费 &e%price%"
+  command-failed: "&c扣款/加款命令执行失败。"
+
+feedback:
+  success:
+    sound: "ENTITY_PLAYER_LEVELUP"
+    volume: 1.0
+    pitch: 1.0
+    title: "&a购买成功"
+    subtitle: "&f花费: &e%price%"
+  fail:
+    sound: "ENTITY_VILLAGER_NO"
+    volume: 1.0
+    pitch: 1.0
+    title: "&c购买失败"
+    subtitle: "&f%reason%"

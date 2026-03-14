@@ -1,0 +1,14 @@
+use: true
+
+starter:
+  price: "10"
+  action: deduct
+  commands:
+    - "give %player% bread 16"
+
+vip_day:
+  price: "88.50"
+  action: deduct
+  commands:
+    - "lp user %player% parent addtemp vip 1d"
+    - "tellraw %player% {\"text\":\"你成功购买了1天VIP！\",\"color\":\"gold\"}"
