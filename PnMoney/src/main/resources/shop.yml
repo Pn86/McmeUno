@@ -1,5 +1,16 @@
+# 是否启用商店功能
 use: true
-1:
-  int: '10'
+
+# 商品ID（字符串或数字都可以）
+"1":
+  # 商品价格（支持整数或小数；建议写成字符串，避免YAML类型误判）
+  int: "10"
+  # 购买后由控制台执行的命令列表，%player% 会替换为购买玩家名
   item:
-    - 'eco give %player% 100'
+    - "eco give %player% 100"
+
+"vip_day":
+  int: "88.50"
+  item:
+    - "lp user %player% parent addtemp vip 1d"
+    - "tellraw %player% {\"text\":\"你成功购买了1天VIP！\",\"color\":\"gold\"}"

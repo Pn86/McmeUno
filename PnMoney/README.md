@@ -29,12 +29,20 @@ PnMoney 是一个带有基础货币系统与简单商店系统的插件。
   - 存储方式（SQLite / MySQL）
 - `shop.yml`
   - `use`：是否启用商店
-  - 商品节点示例：
+  - 商品节点示例（正确格式）：
     ```yml
-    1:
-      int: '10'
+    use: true
+
+    "1":
+      int: "10"
       item:
-        - 'eco give %player% 100'
+        - "eco give %player% 100"
+
+    "vip_day":
+      int: "88.50"
+      item:
+        - "lp user %player% parent addtemp vip 1d"
+        - "tellraw %player% {\"text\":\"你成功购买了1天VIP！\",\"color\":\"gold\"}"
     ```
 
 ## 存储与迁移
