@@ -78,6 +78,14 @@ public class MoneyManager {
         return setBalance(player, target);
     }
 
+    public boolean hasEnough(OfflinePlayer player, BigDecimal amount) {
+        BigDecimal normalized = normalize(amount);
+        if (normalized.compareTo(BigDecimal.ZERO) <= 0) {
+            return false;
+        }
+        return getBalance(player).compareTo(normalized) >= 0;
+    }
+
     public boolean resetBalance(OfflinePlayer player) {
         return setBalance(player, getDefaultBalance());
     }

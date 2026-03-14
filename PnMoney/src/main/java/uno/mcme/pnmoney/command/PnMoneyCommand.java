@@ -236,8 +236,13 @@ public class PnMoneyCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        if (!money.takeBalance(player, price)) {
+        if (!money.hasEnough(player, price)) {
             send(sender, "messages.not-enough");
+            return true;
+        }
+
+        if (!money.takeBalance(player, price)) {
+            send(sender, "messages.operation-failed");
             return true;
         }
 
