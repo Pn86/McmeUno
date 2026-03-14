@@ -54,6 +54,11 @@ PnMoney 是一个带有基础货币系统与简单商店系统的插件。
 - `%pnmoney.money%` 货币名称
 - `%pnmoney.bal%` 玩家余额
 
+## Shop 购买校验说明
+- 商店购买时会优先通过 PlaceholderAPI 解析 `%pnmoney.bal%` 来确认玩家余额。
+- 若服务器未安装 PlaceholderAPI，则自动回退为插件内部余额读取。
+- 仅当余额充足且扣款成功时才会执行 `shop.yml` 中的商品命令。
+
 ## 对外 API
 插件主类提供 `getMoneyService()`，返回 `MoneyService` 接口。
 

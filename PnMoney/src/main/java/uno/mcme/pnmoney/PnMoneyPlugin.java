@@ -25,7 +25,7 @@ public class PnMoneyPlugin extends JavaPlugin {
         databaseManager.start();
 
         moneyManager = new MoneyManager(this, databaseManager);
-        shopManager = new ShopManager(this);
+        shopManager = new ShopManager(this, moneyManager);
         moneyService = new MoneyServiceImpl(moneyManager);
 
         PnMoneyCommand command = new PnMoneyCommand(this, moneyManager, shopManager);

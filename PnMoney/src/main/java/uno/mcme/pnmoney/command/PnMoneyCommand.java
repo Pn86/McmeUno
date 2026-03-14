@@ -12,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 import uno.mcme.pnmoney.MoneyManager;
 import uno.mcme.pnmoney.PnMoneyPlugin;
 import uno.mcme.pnmoney.data.PlayerBalance;
-import uno.mcme.pnmoney.shop.ShopEntry;
 import uno.mcme.pnmoney.shop.ShopManager;
 import uno.mcme.pnmoney.util.Text;
 
@@ -20,7 +19,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PnMoneyCommand implements CommandExecutor, TabCompleter {
@@ -242,46 +240,42 @@ public class PnMoneyCommand implements CommandExecutor, TabCompleter {
             send(sender, "messages.player-only");
             return false;
         }
-        if (!shop.isEnabled()) {
-            send(sender, "messages.shop-disabled");
-            return false;
-        }
         if (args.length < 2) {
             send(sender, "messages.invalid-usage");
             return false;
         }
 
-        Optional<ShopEntry> optional = shop.getEntry(args[1]);
-        if (optional.isEmpty()) {
-            send(sender, "messages.shop-not-found");
-            return false;
+        var result = shop.purchase(player, args[1]);
+        switch (result.status()) {
+            case DISABLED -> {
+                send(sender, "messages.shop-disabled");
+                return false;
+            }
+            case NOT_FOUND -> {
+                send(sender, "messages.shop-not-found");
+                return false;
+            }
+            case INVALID_PRICE -> {
+                send(sender, "messages.shop-invalid-price");
+                return false;
+            }
+            case NOT_ENOUGH -> {
+                send(sender, "messages.not-enough");
+                return false;
+            }
+            case BALANCE_READ_FAILED, DEDUCT_FAILED -> {
+                send(sender, "messages.operation-failed");
+                return false;
+            }
+            case SUCCESS -> {
+                String message = plugin.getConfig().getString("messages.shop-buy", "&a购买成功，花费 %amount% %money%")
+                        .replace("%amount%", result.price().stripTrailingZeros().toPlainString())
+                        .replace("%money%", money.getCurrencyName());
+                player.sendMessage(Text.color(message));
+                return true;
+            }
         }
-
-        ShopEntry entry = optional.get();
-        BigDecimal price = money.normalize(entry.price());
-        if (price.compareTo(BigDecimal.ZERO) <= 0) {
-            send(sender, "messages.shop-invalid-price");
-            return false;
-        }
-
-        if (!money.hasEnough(player, price)) {
-            send(sender, "messages.not-enough");
-            return false;
-        }
-
-        if (!money.takeBalance(player, price)) {
-            send(sender, "messages.operation-failed");
-            return false;
-        }
-
-        for (String cmd : entry.commands()) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd.replace("%player%", player.getName()));
-        }
-        String message = plugin.getConfig().getString("messages.shop-buy", "&a购买成功，花费 %amount% %money%")
-                .replace("%amount%", price.stripTrailingZeros().toPlainString())
-                .replace("%money%", money.getCurrencyName());
-        player.sendMessage(Text.color(message));
-        return true;
+        return false;
     }
 
     private BigDecimal parseAmount(CommandSender sender, String raw) {
