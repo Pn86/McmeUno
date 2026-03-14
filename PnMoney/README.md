@@ -13,6 +13,11 @@ PnMoney 是一个带有基础货币系统与简单商店系统的插件。
 - `/pnmy top` 查看货币排行榜
 - `/pnmy shop [商品ID]` 购买物品
 
+## 权限
+- `pnmoney.admin`：管理权限（reload/give/take/reset/set/pay/list他人）
+- `pnmoney.player`：普通玩家权限（shop/top/list自己）
+- `pnmoney.use`：兼容旧权限节点（与 `pnmoney.player` 等效用于普通功能）
+
 ## 配置文件
 - `config.yml`
   - 货币名称

@@ -13,6 +13,9 @@ permissions:
   pnmoney.admin:
     description: PnMoney 管理权限
     default: op
+  pnmoney.player:
+    description: PnMoney 玩家权限（shop/top/list自己）
+    default: true
   pnmoney.use:
-    description: PnMoney 普通使用权限
+    description: PnMoney 兼容旧版普通使用权限
     default: true

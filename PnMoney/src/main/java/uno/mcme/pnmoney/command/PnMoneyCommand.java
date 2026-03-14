@@ -69,15 +69,37 @@ public class PnMoneyCommand implements CommandExecutor, TabCompleter {
                 return handleReset(sender, args);
             }
             case "pay" -> {
+                if (!sender.hasPermission("pnmoney.admin")) {
+                    send(sender, "messages.no-permission");
+                    return false;
+                }
                 return handlePay(sender, args);
             }
             case "list" -> {
+                if (!sender.hasPermission("pnmoney.player")
+                        && !sender.hasPermission("pnmoney.use")
+                        && !sender.hasPermission("pnmoney.admin")) {
+                    send(sender, "messages.no-permission");
+                    return false;
+                }
                 return handleList(sender, args);
             }
             case "top" -> {
+                if (!sender.hasPermission("pnmoney.player")
+                        && !sender.hasPermission("pnmoney.use")
+                        && !sender.hasPermission("pnmoney.admin")) {
+                    send(sender, "messages.no-permission");
+                    return false;
+                }
                 return handleTop(sender);
             }
             case "shop" -> {
+                if (!sender.hasPermission("pnmoney.player")
+                        && !sender.hasPermission("pnmoney.use")
+                        && !sender.hasPermission("pnmoney.admin")) {
+                    send(sender, "messages.no-permission");
+                    return false;
+                }
                 return handleShop(sender, args);
             }
             default -> {
@@ -90,12 +112,12 @@ public class PnMoneyCommand implements CommandExecutor, TabCompleter {
     private boolean handleAdminAmount(CommandSender sender, String sub, String[] args) {
         if (args.length < 3) {
             send(sender, "messages.invalid-usage");
-            return true;
+            return false;
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
         BigDecimal amount = parseAmount(sender, args[2]);
         if (amount == null) {
-            return true;
+            return false;
         }
 
         boolean success = switch (sub) {
@@ -106,7 +128,7 @@ public class PnMoneyCommand implements CommandExecutor, TabCompleter {
 
         if (!success) {
             send(sender, "messages.operation-failed");
-            return true;
+            return false;
         }
 
         String msg = plugin.getConfig().getString("messages.admin-success", "&a操作成功: %target% -> %bal% %money%");
@@ -120,42 +142,43 @@ public class PnMoneyCommand implements CommandExecutor, TabCompleter {
     private boolean handleReset(CommandSender sender, String[] args) {
         if (args.length < 2) {
             send(sender, "messages.invalid-usage");
-            return true;
+            return false;
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
         if (money.resetBalance(target)) {
             send(sender, "messages.reset-success");
+            return true;
         } else {
             send(sender, "messages.operation-failed");
+            return false;
         }
-        return true;
     }
 
     private boolean handlePay(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
             send(sender, "messages.player-only");
-            return true;
+            return false;
         }
         if (args.length < 3) {
             send(sender, "messages.invalid-usage");
-            return true;
+            return false;
         }
 
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
         if (target.getUniqueId().equals(player.getUniqueId())) {
             send(sender, "messages.pay-self");
-            return true;
+            return false;
         }
 
         BigDecimal amount = parseAmount(sender, args[2]);
         if (amount == null) {
-            return true;
+            return false;
         }
 
         boolean success = money.transfer(player, target, amount);
         if (!success) {
             send(sender, "messages.not-enough");
-            return true;
+            return false;
         }
 
         String senderMsg = plugin.getConfig().getString("messages.pay-success", "&a支付成功: %target% +%amount% %money%");
@@ -177,13 +200,18 @@ public class PnMoneyCommand implements CommandExecutor, TabCompleter {
 
     private boolean handleList(CommandSender sender, String[] args) {
         OfflinePlayer target;
+        boolean isAdmin = sender.hasPermission("pnmoney.admin");
         if (args.length >= 2) {
+            if (!isAdmin) {
+                send(sender, "messages.no-permission");
+                return false;
+            }
             target = Bukkit.getOfflinePlayer(args[1]);
         } else if (sender instanceof Player player) {
             target = player;
         } else {
             send(sender, "messages.invalid-usage");
-            return true;
+            return false;
         }
 
         String msg = plugin.getConfig().getString("messages.balance", "&e%target% 余额: %bal% %money%");
@@ -212,38 +240,38 @@ public class PnMoneyCommand implements CommandExecutor, TabCompleter {
     private boolean handleShop(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
             send(sender, "messages.player-only");
-            return true;
+            return false;
         }
         if (!shop.isEnabled()) {
             send(sender, "messages.shop-disabled");
-            return true;
+            return false;
         }
         if (args.length < 2) {
             send(sender, "messages.invalid-usage");
-            return true;
+            return false;
         }
 
         Optional<ShopEntry> optional = shop.getEntry(args[1]);
         if (optional.isEmpty()) {
             send(sender, "messages.shop-not-found");
-            return true;
+            return false;
         }
 
         ShopEntry entry = optional.get();
         BigDecimal price = money.normalize(entry.price());
         if (price.compareTo(BigDecimal.ZERO) <= 0) {
             send(sender, "messages.shop-invalid-price");
-            return true;
+            return false;
         }
 
         if (!money.hasEnough(player, price)) {
             send(sender, "messages.not-enough");
-            return true;
+            return false;
         }
 
         if (!money.takeBalance(player, price)) {
             send(sender, "messages.operation-failed");
-            return true;
+            return false;
         }
 
         for (String cmd : entry.commands()) {
@@ -282,6 +310,9 @@ public class PnMoneyCommand implements CommandExecutor, TabCompleter {
             return subs.stream().filter(s -> s.startsWith(args[0].toLowerCase())).collect(Collectors.toList());
         }
         if (args.length == 2 && Arrays.asList("give", "take", "reset", "set", "pay", "list").contains(args[0].toLowerCase())) {
+            if ("list".equalsIgnoreCase(args[0]) && !sender.hasPermission("pnmoney.admin")) {
+                return List.of();
+            }
             List<String> names = new ArrayList<>();
             Bukkit.getOnlinePlayers().forEach(p -> names.add(p.getName()));
             return names;
