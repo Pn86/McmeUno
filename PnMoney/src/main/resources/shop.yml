@@ -1,0 +1,5 @@
+use: true
+1:
+  int: '10'
+  item:
+    - 'eco give %player% 100'
