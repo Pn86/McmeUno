@@ -1,0 +1,18 @@
+name: PnMoney
+version: 1.0.0
+main: uno.mcme.pnmoney.PnMoneyPlugin
+api-version: '1.21'
+author: Pn86
+softdepend:
+  - PlaceholderAPI
+commands:
+  pnmy:
+    description: PnMoney 命令
+    usage: /pnmy <reload|give|take|reset|set|pay|list|top|shop>
+permissions:
+  pnmoney.admin:
+    description: PnMoney 管理权限
+    default: op
+  pnmoney.use:
+    description: PnMoney 普通使用权限
+    default: true
