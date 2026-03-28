@@ -1,0 +1,16 @@
+name: PnMoneyAutoReload
+version: 1.0.0
+main: cn.pn86.pnmoneyautoreload.PnMoneyAutoReloadPlugin
+api-version: '1.21'
+author: pn86
+
+commands:
+  pnmar:
+    description: PnMoneyAutoReload 主命令
+    usage: /pnmar reload
+    permission: pnmar.reload
+
+permissions:
+  pnmar.reload:
+    description: 允许重载 PnMoneyAutoReload 配置
+    default: op
