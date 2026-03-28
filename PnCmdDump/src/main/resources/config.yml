@@ -1,0 +1,14 @@
+settings:
+  # 复制倍率。最终掉落数量 = 主手数量 x multiplier
+  multiplier: 1
+
+messages:
+  player-only: "&c只有玩家可以使用该命令。"
+  no-permission: "&c你没有权限执行该命令。"
+  empty-hand: "&e你的主手没有物品可复制。"
+  dump-success: "&a已复制主手物品并掉落到地面，倍率: &f%multiplier%x"
+  reload-success: "&aPnCmdDump 配置重载完成。"
+  help:
+    - "&6PnCmdDump 帮助"
+    - "&e/dump &7- 复制主手物品并掉落"
+    - "&e/pncmddump reload &7- 重载插件配置"
