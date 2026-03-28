@@ -1,0 +1,12 @@
+# 自动执行间隔（秒）
+time: 60
+
+# 以控制台身份执行的命令（可带或不带 /）
+command: "pnmy reload"
+
+messages:
+  no-permission: "&c你没有权限执行该命令。"
+  reload-success: "&aPnMoneyAutoReload 配置已重载并重新启动定时任务。"
+  help:
+    - "&6PnMoneyAutoReload 帮助"
+    - "&e/pnmar reload &7- 重载插件配置"
