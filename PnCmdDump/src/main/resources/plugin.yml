@@ -1,0 +1,23 @@
+name: PnCmdDump
+version: 1.0.0
+main: cn.pn86.pncmddump.PnCmdDumpPlugin
+api-version: '1.21'
+author: pn86
+
+commands:
+  dump:
+    description: 复制主手物品并掉落到地面
+    usage: /dump
+    permission: pncmddump.dump
+  pncmddump:
+    description: PnCmdDump 主命令
+    usage: /pncmddump reload
+    permission: pncmddump.reload
+
+permissions:
+  pncmddump.dump:
+    description: 允许使用 /dump 复制主手物品
+    default: op
+  pncmddump.reload:
+    description: 允许使用 /pncmddump reload 重载配置
+    default: op
