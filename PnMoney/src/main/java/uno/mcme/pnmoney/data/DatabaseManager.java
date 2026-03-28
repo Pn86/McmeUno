@@ -1,5 +1,7 @@
 package uno.mcme.pnmoney.data;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import uno.mcme.pnmoney.PnMoneyPlugin;
 
 import java.io.File;
@@ -12,6 +14,8 @@ import java.util.UUID;
 public class DatabaseManager {
 
     private final PnMoneyPlugin plugin;
+
+    private HikariDataSource dataSource;
     private Connection connection;
     private StorageType storageType;
 
@@ -62,14 +66,31 @@ public class DatabaseManager {
     }
 
     private void connectMysql() throws Exception {
-        Class.forName("org.mariadb.jdbc.Driver");
+        HikariConfig config = new HikariConfig();
         String host = plugin.getConfig().getString("storage.mysql.host", "127.0.0.1");
         int port = plugin.getConfig().getInt("storage.mysql.port", 3306);
         String database = plugin.getConfig().getString("storage.mysql.database", "minecraft");
         String user = plugin.getConfig().getString("storage.mysql.username", "root");
         String password = plugin.getConfig().getString("storage.mysql.password", "");
-        String url = "jdbc:mariadb://" + host + ":" + port + "/" + database + "?useUnicode=true&characterEncoding=utf8";
-        connection = DriverManager.getConnection(url, user, password);
+
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database + "?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true");
+        config.setUsername(user);
+        config.setPassword(password);
+
+        config.setMaximumPoolSize(10);
+        config.setMinimumIdle(2);
+        config.setConnectionTimeout(30000);
+        config.setIdleTimeout(600000);
+        config.setMaxLifetime(1800000);
+
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.addDataSourceProperty("useServerPrepStmts", "true");
+
+        dataSource = new HikariDataSource(config);
+        connection = dataSource.getConnection();
     }
 
     private void ensureTable() throws SQLException {
@@ -161,9 +182,16 @@ public class DatabaseManager {
         }
     }
 
-    public synchronized boolean transfer(UUID fromId, String fromName, UUID toId, String toName, BigDecimal amount,
-                                         BigDecimal defaultBalance, boolean allowNegative,
-                                         BigDecimal maxBalance, int scale) {
+    public synchronized boolean transfer(UUID fromId,
+                                         String fromName,
+                                         UUID toId,
+                                         String toName,
+                                         BigDecimal amount,
+                                         BigDecimal defaultBalance,
+                                         boolean allowNegative,
+                                         BigDecimal maxBalance,
+                                         int scale)
+    {
         try {
             connection.setAutoCommit(false);
 
@@ -222,6 +250,9 @@ public class DatabaseManager {
                 connection.close();
             } catch (SQLException ignored) {
             }
+        }
+        if (dataSource != null) {
+            dataSource.close();
         }
     }
 }
