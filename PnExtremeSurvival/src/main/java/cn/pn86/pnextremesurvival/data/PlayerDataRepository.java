@@ -23,17 +23,25 @@ public class PlayerDataRepository {
 
     public void init() {
         File dbFile = new File(plugin.getDataFolder(), "database.db");
-        if (!dbFile.getParentFile().exists()) {
-            dbFile.getParentFile().mkdirs();
+        File parent = dbFile.getParentFile();
+        if (parent != null && !parent.exists() && !parent.mkdirs()) {
+            throw new IllegalStateException("Failed to create plugin data directory: " + parent.getAbsolutePath());
         }
 
         try {
             this.connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
-            this.connection.createStatement().execute("PRAGMA journal_mode = WAL;");
-            this.connection.createStatement().execute("PRAGMA synchronous = FULL;");
+            executePragma("PRAGMA busy_timeout = 5000;");
+            executePragma("PRAGMA journal_mode = WAL;");
+            executePragma("PRAGMA synchronous = NORMAL;");
             createTable();
         } catch (SQLException e) {
-            throw new IllegalStateException("Failed to initialize database", e);
+            throw new IllegalStateException("Failed to initialize database at " + dbFile.getAbsolutePath(), e);
+        }
+    }
+
+    private void executePragma(String sql) throws SQLException {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(sql);
         }
     }
 
@@ -53,6 +61,10 @@ public class PlayerDataRepository {
     }
 
     public Optional<PlayerLifeData> load(UUID uuid) {
+        if (connection == null) {
+            return Optional.empty();
+        }
+
         String sql = "SELECT max_health, permanently_dead FROM player_data WHERE uuid = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, uuid.toString());
@@ -72,6 +84,10 @@ public class PlayerDataRepository {
     }
 
     public synchronized void save(UUID uuid, String name, double maxHealth, boolean permanentlyDead) {
+        if (connection == null) {
+            return;
+        }
+
         String sql = """
                 INSERT INTO player_data(uuid, max_health, permanently_dead, name, updated_at)
                 VALUES (?, ?, ?, ?, strftime('%s', 'now'))

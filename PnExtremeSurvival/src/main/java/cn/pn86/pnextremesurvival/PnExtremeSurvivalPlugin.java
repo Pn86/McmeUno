@@ -19,7 +19,13 @@ public class PnExtremeSurvivalPlugin extends JavaPlugin {
         saveDefaultConfig();
 
         this.repository = new PlayerDataRepository(this);
-        this.repository.init();
+        try {
+            this.repository.init();
+        } catch (IllegalStateException ex) {
+            getLogger().severe("Database initialization failed: " + ex.getMessage());
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         this.limitedLifeService = new LimitedLifeService(this, repository);
         LootChestService lootChestService = new LootChestService(this);
