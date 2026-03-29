@@ -1,0 +1,72 @@
+# ===============================
+# PnExtremeSurvival 主配置文件
+# 作者: Pn86
+# 说明:
+# - 血量单位使用“生命值点数”，2.0 = 1♥
+# - 如需输入“心”的概念，请在命令中按心输入，插件会自动换算
+# ===============================
+
+# 功能总开关
+features:
+  # 是否启用有限生命系统（死亡扣上限、击杀加上限）
+  limited-life: true
+  # 是否启用死亡战利品箱系统
+  death-loot-chest: true
+
+# 有限生命系统设置
+limited-life:
+  # 新玩家默认最大生命（点数），20.0 = 10♥
+  default-health: 20.0
+  # 玩家最大生命上限（点数），40.0 = 20♥
+  max-health: 40.0
+  # 玩家最小生命下限（点数）
+  # - 设置为 0.0：允许归零触发永久旁观
+  # - 设置为 >0：生命不会低于该值，可用于关闭归零旁观玩法
+  min-health: 0.0
+  # 每次死亡扣除的最大生命（点数），2.0 = 扣 1♥
+  death-penalty-health: 2.0
+  # 每次击杀玩家奖励的最大生命（点数），2.0 = 加 1♥
+  kill-reward-health: 2.0
+  # 是否仅在“被玩家击杀”时才扣生命；true 时环境死亡不扣
+  only-player-kill-death-penalty: false
+  # 当生命降到 0 时是否进入永久旁观
+  # 仅在 min-health <= 0 时生效
+  enable-permanent-spectator-on-zero: true
+  # 创造模式玩家是否免疫有限生命系统
+  exempt-creative: true
+
+# 死亡战利品箱设置
+death-loot:
+  # 原地无法放置箱子时，横向搜索半径（单位：方块）
+  search-radius: 5
+
+# 文本消息（支持颜色代码 &）
+messages:
+  # 前缀
+  prefix: "&8[&6PnExtremeSurvival&8] &r"
+  # 无权限
+  no-permission: "&c你没有权限执行此命令。"
+  # 仅玩家执行（预留）
+  player-only: "&c该命令只能由玩家执行。"
+  # 重载完成
+  reload: "&a插件配置已重载。"
+  # 玩家不存在
+  player-not-found: "&c玩家不存在或未在线。"
+  # 非法数值
+  invalid-number: "&c请输入有效的生命值（支持小数）。"
+  # 命令帮助
+  usage: "&e用法: /pnes <reload|see|add|remove|spawn>"
+  # 查询生命
+  see: "&f玩家 &e%player% &f当前最大生命: &c%health%"
+  # 修改生命成功
+  changed: "&a已将玩家 &e%player% &a最大生命调整为 &c%health%"
+  # 管理员复活成功提示
+  revived: "&a已复活玩家 &e%player% &a并设置为 1♥ 生命上限。"
+  # 被复活玩家提示
+  revived-target: "&a你已被管理员复活，当前生命上限为 1♥。"
+  # 生命耗尽提示
+  perma-dead: "&c你的生命已耗尽，已进入永久旁观模式。"
+  # 战利品箱坐标提示
+  loot-chest-created: "&e你的死亡物品已保存到战利品箱：&f%world% &7(&f%x%, %y%, %z%&7)"
+  # 数据加载失败提示（预留）
+  data-load-failed: "&c数据加载失败，请联系管理员。"
