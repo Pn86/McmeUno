@@ -25,7 +25,7 @@ PnExtremeSurvival 是一个“极限生存”玩法插件，核心功能：
 2. 启动或重启服务器。
 3. 首次启动后会生成：
    - `plugins/PnExtremeSurvival/config.yml`
-   - `plugins/PnExtremeSurvival/database.db`
+   - `plugins/PnExtremeSurvival/database.yml`
 
 ---
 
@@ -102,7 +102,7 @@ PnExtremeSurvival 是一个“极限生存”玩法插件，核心功能：
 ---
 
 ## 6. 数据存储与安全
-- 玩家数据持久化在 `database.db`（SQLite）中。
+- 玩家数据持久化在 `database.yml`（YAML）中。
 - 生命变更会实时写入数据库，减少服务器崩溃导致的数据丢失风险。
 - 建议定期备份 `plugins/PnExtremeSurvival/` 目录。
 

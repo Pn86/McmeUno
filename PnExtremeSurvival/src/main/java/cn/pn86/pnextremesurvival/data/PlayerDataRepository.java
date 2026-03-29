@@ -1,120 +1,86 @@
 package cn.pn86.pnextremesurvival.data;
 
 import cn.pn86.pnextremesurvival.PnExtremeSurvivalPlugin;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
 public class PlayerDataRepository {
 
     private final PnExtremeSurvivalPlugin plugin;
-    private Connection connection;
+    private File dataFile;
+    private YamlConfiguration data;
 
     public PlayerDataRepository(PnExtremeSurvivalPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void init() {
-        File dbFile = new File(plugin.getDataFolder(), "database.db");
-        File parent = dbFile.getParentFile();
-        if (parent != null && !parent.exists() && !parent.mkdirs()) {
-            throw new IllegalStateException("Failed to create plugin data directory: " + parent.getAbsolutePath());
+        File folder = plugin.getDataFolder();
+        if (!folder.exists() && !folder.mkdirs()) {
+            throw new IllegalStateException("Failed to create plugin data directory: " + folder.getAbsolutePath());
         }
 
-        try {
-            this.connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
-            executePragma("PRAGMA busy_timeout = 5000;");
-            executePragma("PRAGMA journal_mode = WAL;");
-            executePragma("PRAGMA synchronous = NORMAL;");
-            createTable();
-        } catch (SQLException e) {
-            throw new IllegalStateException("Failed to initialize database at " + dbFile.getAbsolutePath(), e);
-        }
-    }
-
-    private void executePragma(String sql) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(sql);
-        }
-    }
-
-    private void createTable() throws SQLException {
-        String sql = """
-                CREATE TABLE IF NOT EXISTS player_data (
-                  uuid TEXT PRIMARY KEY,
-                  max_health REAL NOT NULL,
-                  permanently_dead INTEGER NOT NULL,
-                  name TEXT,
-                  updated_at INTEGER NOT NULL
-                )
-                """;
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(sql);
-        }
-    }
-
-    public Optional<PlayerLifeData> load(UUID uuid) {
-        if (connection == null) {
-            return Optional.empty();
-        }
-
-        String sql = "SELECT max_health, permanently_dead FROM player_data WHERE uuid = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, uuid.toString());
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (!resultSet.next()) {
-                    return Optional.empty();
+        this.dataFile = new File(folder, "database.yml");
+        if (!dataFile.exists()) {
+            try {
+                if (!dataFile.createNewFile()) {
+                    throw new IllegalStateException("Failed to create data file: " + dataFile.getAbsolutePath());
                 }
-                return Optional.of(new PlayerLifeData(
-                        resultSet.getDouble("max_health"),
-                        resultSet.getInt("permanently_dead") == 1
-                ));
+            } catch (IOException e) {
+                throw new IllegalStateException("Failed to create data file: " + dataFile.getAbsolutePath(), e);
             }
-        } catch (SQLException e) {
-            plugin.getLogger().warning("Failed to load player data: " + e.getMessage());
+        }
+
+        this.data = YamlConfiguration.loadConfiguration(dataFile);
+    }
+
+    public synchronized Optional<PlayerLifeData> load(UUID uuid) {
+        if (data == null) {
             return Optional.empty();
         }
+
+        ConfigurationSection section = data.getConfigurationSection("players." + uuid);
+        if (section == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(new PlayerLifeData(
+                section.getDouble("max-health", 20.0),
+                section.getBoolean("permanently-dead", false)
+        ));
     }
 
     public synchronized void save(UUID uuid, String name, double maxHealth, boolean permanentlyDead) {
-        if (connection == null) {
+        if (data == null || dataFile == null) {
             return;
         }
 
-        String sql = """
-                INSERT INTO player_data(uuid, max_health, permanently_dead, name, updated_at)
-                VALUES (?, ?, ?, ?, strftime('%s', 'now'))
-                ON CONFLICT(uuid) DO UPDATE SET
-                  max_health = excluded.max_health,
-                  permanently_dead = excluded.permanently_dead,
-                  name = excluded.name,
-                  updated_at = excluded.updated_at
-                """;
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, uuid.toString());
-            statement.setDouble(2, maxHealth);
-            statement.setInt(3, permanentlyDead ? 1 : 0);
-            statement.setString(4, name);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            plugin.getLogger().warning("Failed to save player data: " + e.getMessage());
-        }
+        String path = "players." + uuid;
+        data.set(path + ".name", name);
+        data.set(path + ".max-health", maxHealth);
+        data.set(path + ".permanently-dead", permanentlyDead);
+        data.set(path + ".updated-at", System.currentTimeMillis());
+        flush();
     }
 
-    public void close() {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                plugin.getLogger().warning("Failed to close database: " + e.getMessage());
-            }
+    public synchronized void close() {
+        flush();
+    }
+
+    private void flush() {
+        if (data == null || dataFile == null) {
+            return;
+        }
+
+        try {
+            data.save(dataFile);
+        } catch (IOException e) {
+            plugin.getLogger().warning("Failed to save database.yml: " + e.getMessage());
         }
     }
 }
