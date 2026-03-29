@@ -1,0 +1,19 @@
+name: PnExtremeSurvival
+version: 1.0.0
+main: cn.pn86.pnextremesurvival.PnExtremeSurvivalPlugin
+api-version: '1.21'
+author: Pn86
+
+commands:
+  pnes:
+    description: PnExtremeSurvival 主命令
+    usage: /pnes <reload|see|add|remove|spawn>
+    permission: pnes.admin
+
+permissions:
+  pnes.admin:
+    description: PnExtremeSurvival 管理权限
+    default: op
+  pnes.see:
+    description: 查看玩家生命信息
+    default: true
