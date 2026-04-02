@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import uno.mcme.pnoremine.PnOreMinePlugin;
 import uno.mcme.pnoremine.mine.MineRegion;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PnOreMineCommand implements CommandExecutor {
@@ -19,7 +20,7 @@ public class PnOreMineCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("pnoremine.admin")) {
-            sender.sendMessage(plugin.getPrefix() + plugin.msg("no-permission"));
+            plugin.sendLocalized(sender, "no-permission", Map.of(), "[message]&c你没有权限执行这个命令。");
             return true;
         }
         if (args.length == 0) {
@@ -30,13 +31,13 @@ public class PnOreMineCommand implements CommandExecutor {
             case "reload" -> {
                 boolean ok = plugin.reloadMinePlugin();
                 if (ok) {
-                    sender.sendMessage(plugin.getPrefix() + plugin.msg("reloaded"));
+                    plugin.sendLocalized(sender, "reloaded", Map.of(), "[message]&a插件已重载。");
                 }
                 return true;
             }
             case "list" -> {
                 String names = plugin.getMineManager().getMines().stream().map(MineRegion::getName).collect(Collectors.joining(", "));
-                sender.sendMessage(plugin.getPrefix() + plugin.msg("mine-list-title").replace("%mines%", names));
+                plugin.sendLocalized(sender, "mine-list-title", Map.of("mines", names), "[message]&e矿场列表: %mines%");
                 return true;
             }
             case "see" -> {
@@ -45,13 +46,14 @@ public class PnOreMineCommand implements CommandExecutor {
                 }
                 MineRegion mine = plugin.getMineManager().findMine(args[1]);
                 if (mine == null) {
-                    sender.sendMessage(plugin.getPrefix() + plugin.msg("mine-not-found").replace("%mine%", args[1]));
+                    plugin.sendLocalized(sender, "mine-not-found", Map.of("mine", args[1]), "[message]&c找不到矿场: %mine%");
                     return true;
                 }
-                sender.sendMessage(plugin.getPrefix() + plugin.msg("mine-see")
-                    .replace("%mine%", mine.getName())
-                    .replace("%world%", mine.getWorldName())
-                    .replace("%time%", String.valueOf(mine.getRemainingSeconds())));
+                plugin.sendLocalized(sender, "mine-see", Map.of(
+                    "mine", mine.getName(),
+                    "world", mine.getWorldName(),
+                    "time", String.valueOf(mine.getRemainingSeconds())
+                ), "[message]&e矿场 &6%mine% &e世界: &f%world% &e剩余: &f%time%s");
                 return true;
             }
             case "reset" -> {
@@ -60,11 +62,11 @@ public class PnOreMineCommand implements CommandExecutor {
                 }
                 MineRegion mine = plugin.getMineManager().findMine(args[1]);
                 if (mine == null) {
-                    sender.sendMessage(plugin.getPrefix() + plugin.msg("mine-not-found").replace("%mine%", args[1]));
+                    plugin.sendLocalized(sender, "mine-not-found", Map.of("mine", args[1]), "[message]&c找不到矿场: %mine%");
                     return true;
                 }
-                mine.reset();
-                sender.sendMessage(plugin.getPrefix() + plugin.msg("mine-reset").replace("%mine%", mine.getName()));
+                plugin.resetMineWithSafety(mine, true);
+                plugin.sendLocalized(sender, "mine-reset", Map.of("mine", mine.getName()), "[message]&a矿场 %mine% 已刷新。");
                 return true;
             }
             default -> {

@@ -6,6 +6,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import uno.mcme.pnoremine.PnOreMinePlugin;
 
+import java.util.Map;
+
 public class WorldProtectListener implements Listener {
 
     private final PnOreMinePlugin plugin;
@@ -28,6 +30,6 @@ public class WorldProtectListener implements Listener {
         }
 
         event.setCancelled(true);
-        event.getPlayer().sendMessage(plugin.getPrefix() + plugin.msg("world-protect"));
+        plugin.sendLocalized(event.getPlayer(), "world-protect", Map.of(), "[message]&c该世界受保护，只有矿区可破坏。");
     }
 }

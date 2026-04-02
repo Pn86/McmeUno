@@ -12,6 +12,8 @@ import uno.mcme.pnoremine.mine.DropMode;
 import uno.mcme.pnoremine.mine.MineRegion;
 import uno.mcme.pnoremine.mine.OreEntry;
 
+import java.util.Map;
+
 public class MineBreakListener implements Listener {
 
     private final PnOreMinePlugin plugin;
@@ -43,6 +45,6 @@ public class MineBreakListener implements Listener {
 
         event.setDropItems(false);
         plugin.getEconomy().depositPlayer(player, ore.amount());
-        player.sendActionBar(plugin.msg("reward-value").replace("%value%", String.valueOf(ore.amount())));
+        plugin.sendLocalized(player, "reward-value", Map.of("value", String.valueOf(ore.amount())), "[actionbar]&a挖矿收益 +%value%");
     }
 }

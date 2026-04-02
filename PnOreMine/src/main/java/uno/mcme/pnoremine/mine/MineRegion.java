@@ -89,11 +89,14 @@ public class MineRegion {
         return null;
     }
 
-    public void tickAndMaybeReset() {
-        remainingSeconds--;
-        if (remainingSeconds <= 0) {
-            reset();
+    public void tick() {
+        if (remainingSeconds > 0) {
+            remainingSeconds--;
         }
+    }
+
+    public boolean isReadyToReset() {
+        return remainingSeconds <= 0;
     }
 
     public void reset() {
