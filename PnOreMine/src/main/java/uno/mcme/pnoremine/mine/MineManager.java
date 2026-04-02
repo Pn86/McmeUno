@@ -47,4 +47,22 @@ public class MineManager {
         }
         return worlds;
     }
+
+    public MineRegion getWorldPrimaryMine(String worldName) {
+        for (MineRegion mine : mineMap.values()) {
+            if (mine.getWorldName().equalsIgnoreCase(worldName)) {
+                return mine;
+            }
+        }
+        return null;
+    }
+
+    public boolean canPvp(Location location) {
+        for (MineRegion mine : mineMap.values()) {
+            if (mine.isPvpEnabled() && mine.containsXZ(location)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

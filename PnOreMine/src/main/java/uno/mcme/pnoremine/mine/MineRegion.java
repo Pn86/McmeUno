@@ -22,6 +22,10 @@ public class MineRegion {
     private final int resetTimeSeconds;
     private final DropMode dropMode;
     private final List<OreEntry> ores;
+    private final int spawnX;
+    private final int spawnY;
+    private final int spawnZ;
+    private final boolean pvpEnabled;
     private int remainingSeconds;
     private int totalWeight;
 
@@ -35,7 +39,11 @@ public class MineRegion {
                       int maxZ,
                       int resetTimeSeconds,
                       DropMode dropMode,
-                      List<OreEntry> ores) {
+                      List<OreEntry> ores,
+                      int spawnX,
+                      int spawnY,
+                      int spawnZ,
+                      boolean pvpEnabled) {
         this.name = name;
         this.worldName = worldName;
         this.minX = minX;
@@ -47,6 +55,10 @@ public class MineRegion {
         this.resetTimeSeconds = resetTimeSeconds;
         this.dropMode = dropMode;
         this.ores = ores;
+        this.spawnX = spawnX;
+        this.spawnY = spawnY;
+        this.spawnZ = spawnZ;
+        this.pvpEnabled = pvpEnabled;
         this.remainingSeconds = resetTimeSeconds;
         this.totalWeight = ores.stream().mapToInt(OreEntry::weight).sum();
     }
@@ -67,6 +79,18 @@ public class MineRegion {
         return dropMode;
     }
 
+    public boolean isPvpEnabled() {
+        return pvpEnabled;
+    }
+
+    public Location getSpawnLocation() {
+        World world = Bukkit.getWorld(worldName);
+        if (world == null) {
+            return null;
+        }
+        return new Location(world, spawnX + 0.5, spawnY, spawnZ + 0.5);
+    }
+
     public boolean contains(Location location) {
         if (location == null || location.getWorld() == null) {
             return false;
@@ -78,6 +102,18 @@ public class MineRegion {
         int y = location.getBlockY();
         int z = location.getBlockZ();
         return x >= minX && x <= maxX && y >= minY && y <= maxY && z >= minZ && z <= maxZ;
+    }
+
+    public boolean containsXZ(Location location) {
+        if (location == null || location.getWorld() == null) {
+            return false;
+        }
+        if (!location.getWorld().getName().equalsIgnoreCase(worldName)) {
+            return false;
+        }
+        int x = location.getBlockX();
+        int z = location.getBlockZ();
+        return x >= minX && x <= maxX && z >= minZ && z <= maxZ;
     }
 
     public OreEntry getOreEntry(Material material) {

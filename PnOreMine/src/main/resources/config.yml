@@ -1,29 +1,27 @@
 language:
   prefix: '&7[&6PnOreMine&7] '
-  no-permission: '&c你没有权限执行这个命令。'
-  reloaded: '&a插件已重载。'
-  mine-not-found: '&c找不到矿场: %mine%'
-  mine-list-title: '&e矿场列表: %mines%'
-  mine-see: '&e矿场 &6%mine% &e世界: &f%world% &e剩余: &f%time%s'
-  mine-reset: '&a矿场 %mine% 已刷新。'
-  config-invalid: '&c检测到配置错误，已自动恢复到上一份可用配置。请检查控制台。'
-  world-protect: '&c该世界受保护，只有矿区可破坏。'
-  reward-value: '&a挖矿收益 +%value%'
+  no-permission: '[message]&c你没有权限执行这个命令。'
+  reloaded: '[message]&a插件已重载。'
+  mine-not-found: '[message]&c找不到矿场: %mine%'
+  mine-list-title: '[message]&e矿场列表: %mines%'
+  mine-see: '[message]&e矿场 &6%mine% &e世界: &f%world% &e剩余: &f%time%s'
+  mine-reset: '[message]&a矿场 %mine% 已刷新。'
+  mine-reset-broadcast: '[message]&e矿场 &6%mine% &e已刷新。'
+  mine-warn-10: '[message]&e矿场 &6%mine% &e将在 &c10秒&e后刷新。请注意离开矿区。'
+  config-invalid: '[message]&c检测到配置错误，已自动恢复到上一份可用配置。请检查控制台。'
+  world-protect: '[actionbar]&c该世界受保护，只有矿区可破坏。'
+  world-spawn-teleport: '[actionbar]&e你已被传送到矿区出生点。'
+  reward-value: '[actionbar]&a挖矿收益 +%value%'
 
 mine:
   demo1:
     world: 'world'
-    xyz:
-      a:
-        x: -10
-        y: 60
-        z: -10
-      b:
-        x: 10
-        y: 70
-        z: 10
+    pos1: '-10 60 -10'
+    pos2: '10 70 10'
+    spawn: '0 80 0' # 矿区出生点，在矿区重置后，所有矿区世界玩家会传送到这里
+    pvp: false # 仅 xyz 平面范围内可配置 PVP（不计算 Y 轴）
     time: '120'
     drop: 'vaule'
     ore:
-      - 'STONE:30:1'
-      - 'GOLD_ORE:5:3'
+      - 'STONE 30 1'
+      - 'GOLD_ORE 5 3'

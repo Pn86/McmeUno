@@ -17,6 +17,7 @@ import uno.mcme.pnoremine.config.ConfigService;
 import uno.mcme.pnoremine.config.ConfigValidationException;
 import uno.mcme.pnoremine.listener.MineBreakListener;
 import uno.mcme.pnoremine.listener.WorldProtectListener;
+import uno.mcme.pnoremine.listener.WorldRuleListener;
 import uno.mcme.pnoremine.mine.MineManager;
 import uno.mcme.pnoremine.mine.MineRegion;
 import uno.mcme.pnoremine.placeholder.PnOreMinePlaceholder;
@@ -58,6 +59,7 @@ public class PnOreMinePlugin extends JavaPlugin {
         registerCommand();
         getServer().getPluginManager().registerEvents(new MineBreakListener(this), this);
         getServer().getPluginManager().registerEvents(new WorldProtectListener(this), this);
+        getServer().getPluginManager().registerEvents(new WorldRuleListener(this), this);
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new PnOreMinePlaceholder(this).register();
@@ -80,7 +82,7 @@ public class PnOreMinePlugin extends JavaPlugin {
     }
 
     public void resetMineWithSafety(MineRegion mine, boolean broadcast) {
-        teleportMineWorldPlayersToSurface(mine.getWorldName());
+        teleportMineWorldPlayersToSpawn(mine.getWorldName());
         mine.reset();
         if (broadcast) {
             Map<String, String> placeholders = new HashMap<>();
@@ -90,16 +92,18 @@ public class PnOreMinePlugin extends JavaPlugin {
         }
     }
 
-    private void teleportMineWorldPlayersToSurface(String worldName) {
+    private void teleportMineWorldPlayersToSpawn(String worldName) {
         World world = Bukkit.getWorld(worldName);
         if (world == null) {
             return;
         }
+        MineRegion primaryMine = mineManager.getWorldPrimaryMine(worldName);
+        Location spawn = primaryMine == null ? null : primaryMine.getSpawnLocation();
+        if (spawn == null) {
+            return;
+        }
         for (Player player : world.getPlayers()) {
-            Location from = player.getLocation();
-            int topY = world.getHighestBlockYAt(from.getBlockX(), from.getBlockZ()) + 1;
-            Location to = new Location(world, from.getBlockX() + 0.5, topY, from.getBlockZ() + 0.5, from.getYaw(), from.getPitch());
-            player.teleport(to);
+            player.teleport(spawn);
         }
     }
 
