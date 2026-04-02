@@ -1,0 +1,17 @@
+name: PnOreMine
+main: uno.mcme.pnoremine.PnOreMinePlugin
+version: 1.0.0
+api-version: '1.21'
+authors: [Pn86]
+depend: [Vault]
+softdepend: [PlaceholderAPI]
+commands:
+  pnom:
+    description: PnOreMine main command
+    usage: /pnom <reload|list|see|reset>
+    permission: pnoremine.admin
+permissions:
+  pnoremine.admin:
+    default: op
+  pnoremine.bypass:
+    default: op

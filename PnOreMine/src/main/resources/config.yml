@@ -1,0 +1,29 @@
+language:
+  prefix: '&7[&6PnOreMine&7] '
+  no-permission: '&c你没有权限执行这个命令。'
+  reloaded: '&a插件已重载。'
+  mine-not-found: '&c找不到矿场: %mine%'
+  mine-list-title: '&e矿场列表: %mines%'
+  mine-see: '&e矿场 &6%mine% &e世界: &f%world% &e剩余: &f%time%s'
+  mine-reset: '&a矿场 %mine% 已刷新。'
+  config-invalid: '&c检测到配置错误，已自动恢复到上一份可用配置。请检查控制台。'
+  world-protect: '&c该世界受保护，只有矿区可破坏。'
+  reward-value: '&a挖矿收益 +%value%'
+
+mine:
+  demo1:
+    world: 'world'
+    xyz:
+      a:
+        x: -10
+        y: 60
+        z: -10
+      b:
+        x: 10
+        y: 70
+        z: 10
+    time: '120'
+    drop: 'vaule'
+    ore:
+      - 'STONE:30:1'
+      - 'GOLD_ORE:5:3'
