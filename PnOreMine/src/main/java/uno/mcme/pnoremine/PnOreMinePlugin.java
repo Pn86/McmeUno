@@ -3,6 +3,7 @@ package uno.mcme.pnoremine;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,8 +19,11 @@ import uno.mcme.pnoremine.config.ConfigValidationException;
 import uno.mcme.pnoremine.listener.MineBreakListener;
 import uno.mcme.pnoremine.listener.WorldProtectListener;
 import uno.mcme.pnoremine.listener.WorldRuleListener;
+import uno.mcme.pnoremine.listener.PluginCompatibilityListener;
 import uno.mcme.pnoremine.mine.MineManager;
 import uno.mcme.pnoremine.mine.MineRegion;
+import uno.mcme.pnoremine.mine.DropMode;
+import uno.mcme.pnoremine.mine.OreEntry;
 import uno.mcme.pnoremine.placeholder.PnOreMinePlaceholder;
 import uno.mcme.pnoremine.util.ColorUtil;
 
@@ -60,6 +64,7 @@ public class PnOreMinePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MineBreakListener(this), this);
         getServer().getPluginManager().registerEvents(new WorldProtectListener(this), this);
         getServer().getPluginManager().registerEvents(new WorldRuleListener(this), this);
+        getServer().getPluginManager().registerEvents(new PluginCompatibilityListener(this), this);
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new PnOreMinePlaceholder(this).register();
@@ -183,6 +188,22 @@ public class PnOreMinePlugin extends JavaPlugin {
 
     public Economy getEconomy() {
         return economy;
+    }
+
+
+    public boolean rewardPlayerForOre(Player player, MineRegion mine, Material blockType, Location location) {
+        OreEntry ore = mine.getOreEntry(blockType);
+        if (ore == null) {
+            return false;
+        }
+        if (mine.getDropMode() == DropMode.ITEM) {
+            int amount = Math.max(1, (int) Math.floor(ore.amount()));
+            player.getWorld().dropItemNaturally(location, new org.bukkit.inventory.ItemStack(ore.material(), amount));
+            return true;
+        }
+        economy.depositPlayer(player, ore.amount());
+        sendLocalized(player, "reward-value", Map.of("value", String.valueOf(ore.amount())), "[actionbar]&a挖矿收益 +%value%");
+        return true;
     }
 
     public String msg(String key) {

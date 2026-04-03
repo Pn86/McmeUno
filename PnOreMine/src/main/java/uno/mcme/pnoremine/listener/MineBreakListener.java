@@ -1,18 +1,11 @@
 package uno.mcme.pnoremine.listener;
 
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
 import uno.mcme.pnoremine.PnOreMinePlugin;
-import uno.mcme.pnoremine.mine.DropMode;
 import uno.mcme.pnoremine.mine.MineRegion;
-import uno.mcme.pnoremine.mine.OreEntry;
-
-import java.util.Map;
 
 public class MineBreakListener implements Listener {
 
@@ -28,23 +21,9 @@ public class MineBreakListener implements Listener {
         if (mine == null) {
             return;
         }
-
-        OreEntry ore = mine.getOreEntry(event.getBlock().getType());
-        if (ore == null) {
-            return;
-        }
-
-        Player player = event.getPlayer();
-        if (mine.getDropMode() == DropMode.ITEM) {
+        boolean rewarded = plugin.rewardPlayerForOre(event.getPlayer(), mine, event.getBlock().getType(), event.getBlock().getLocation());
+        if (rewarded) {
             event.setDropItems(false);
-            int amount = Math.max(1, (int) Math.floor(ore.amount()));
-            Material material = ore.material();
-            player.getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(material, amount));
-            return;
         }
-
-        event.setDropItems(false);
-        plugin.getEconomy().depositPlayer(player, ore.amount());
-        plugin.sendLocalized(player, "reward-value", Map.of("value", String.valueOf(ore.amount())), "[actionbar]&a挖矿收益 +%value%");
     }
 }
