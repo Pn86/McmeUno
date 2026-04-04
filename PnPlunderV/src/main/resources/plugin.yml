@@ -1,0 +1,17 @@
+name: PnPlunderV
+version: 1.0.0
+main: cn.pn86.pnplunderv.PnPlunderVPlugin
+api-version: '1.21'
+author: Pn86
+depend: [Vault]
+
+commands:
+  pnpv:
+    description: PnPlunderV 主命令
+    usage: /pnpv reload
+    permission: pnpv.admin
+
+permissions:
+  pnpv.admin:
+    description: PnPlunderV 管理权限
+    default: op

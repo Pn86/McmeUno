@@ -1,0 +1,16 @@
+# 掠夺百分比（单位：%）
+plunder:
+  percent: 10.0
+
+# 全服 subtitle 播报设置（仅 subtitle）
+subtitle:
+  content: "&6{killer} &f击杀了 &c{victim}&f，掠夺金币: &e{amount}"
+  fade-in: 10
+  stay: 50
+  fade-out: 10
+
+# 语言信息
+messages:
+  no-permission: "&c你没有权限执行此命令"
+  reload-success: "&aPnPlunderV 配置重载完成"
+  usage: "&e用法: /pnpv reload"
