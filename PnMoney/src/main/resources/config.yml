@@ -1,0 +1,40 @@
+currency:
+  name: "金币"
+
+money:
+  allow-negative: false
+  max-decimal: 2
+  max: 999999999.99
+  default: 0.00
+
+storage:
+  # sqlite 或 mysql
+  type: sqlite
+  mysql:
+    host: 127.0.0.1
+    port: 3306
+    database: minecraft
+    username: root
+    password: ""
+
+messages:
+  help: "&6/pnmy reload\n&6/pnmy give [玩家] [数量]\n&6/pnmy take [玩家] [数量]\n&6/pnmy reset [玩家]\n&6/pnmy set [玩家] [数量]\n&6/pnmy pay [玩家] [数量]\n&6/pnmy list [玩家]\n&6/pnmy top\n&6/pnmy shop [商品ID]"
+  no-permission: "&c你没有权限。"
+  reload: "&aPnMoney 已重载。"
+  invalid-usage: "&c参数错误，请查看 /pnmy"
+  invalid-number: "&c请输入正确的数字，且不能为负数。"
+  operation-failed: "&c操作失败。"
+  not-enough: "&c余额不足或超出限制。"
+  reset-success: "&a已重置玩家余额。"
+  player-only: "&c该命令只能由玩家执行。"
+  pay-self: "&c你不能给自己转账。"
+  admin-success: "&a操作成功：%target% 当前余额 %bal% %money%"
+  balance: "&e%target% 余额：&a%bal% %money%"
+  pay-success: "&a你成功支付给 %target% %amount% %money%"
+  receive: "&a你收到来自 %from% 的 %amount% %money%"
+  top-title: "&6==== 货币排行榜 TOP10 ===="
+  top-line: "&e#%index% &f%player% &7- &a%bal% %money%"
+  shop-disabled: "&c商店功能未启用。"
+  shop-not-found: "&c该商品ID不存在。"
+  shop-invalid-price: "&c该商品价格配置错误，请联系管理员。"
+  shop-buy: "&a购买成功，花费 %amount% %money%"
