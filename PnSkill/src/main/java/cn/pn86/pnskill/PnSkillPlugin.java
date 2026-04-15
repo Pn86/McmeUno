@@ -3,7 +3,7 @@ package cn.pn86.pnskill;
 import cn.pn86.pnskill.command.PnSkillCommand;
 import cn.pn86.pnskill.config.MessageService;
 import cn.pn86.pnskill.config.SkillConfigLoader;
-import cn.pn86.pnskill.listener.SkillInteractListener;
+import cn.pn86.pnskill.listener.SkillTriggerListener;
 import cn.pn86.pnskill.service.SkillCastService;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,7 +34,7 @@ public class PnSkillPlugin extends JavaPlugin {
         pnsk.setExecutor(command);
         pnsk.setTabCompleter(command);
 
-        getServer().getPluginManager().registerEvents(new SkillInteractListener(skillCastService), this);
+        getServer().getPluginManager().registerEvents(new SkillTriggerListener(skillCastService), this);
     }
 
     public void reloadEverything() {
