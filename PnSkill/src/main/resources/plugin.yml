@@ -1,0 +1,15 @@
+name: PnSkill
+version: 1.0.0
+main: cn.pn86.pnskill.PnSkillPlugin
+api-version: '1.21'
+authors: [Pn86]
+
+commands:
+  pnsk:
+    description: PnSkill 主命令
+    usage: /pnsk <bind|see|reload|list|skill>
+
+permissions:
+  pnskill.admin:
+    description: PnSkill 管理权限
+    default: op
