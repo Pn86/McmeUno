@@ -1,0 +1,26 @@
+messages:
+  prefix: '&8[&bPnSkill&8] '
+  no-permission: '&c你没有权限执行该命令。'
+  player-only: '&c该命令只能由玩家执行。'
+  usage-main: '&e用法: /pnsk <bind|see|reload|list|skill>'
+  usage-bind: '&e用法: /pnsk bind <技能ID>'
+  usage-skill: '&e用法: /pnsk skill <技能ID> <a|b>'
+  reloaded: '&aPnSkill 配置已重载。'
+  bind-success: '&a成功将手中物品绑定技能: &b%skill%'
+  bind-fail-empty-hand: '&c请先手持一个物品。'
+  bind-fail-not-found: '&c技能不存在: &f%skill%'
+  bind-seen: '&a该物品已绑定技能: &b%skill%'
+  bind-none: '&e该物品尚未绑定任何技能。'
+  list-header: '&e可用技能列表: &b%skills%'
+  list-empty: '&e当前没有可用技能。'
+  invalid-mode: '&c技能模式必须是 a 或 b。'
+  cast-not-found: '&c技能不存在: &f%skill%'
+  cast-success: '&a已释放技能 &b%skill% &a模式 &b%mode%'
+  cooldown-subtitle: '&c冷却中，还需 &f%seconds% &c秒。'
+  skill-missing-node: '&c技能配置缺失节点: &f%skill%.%mode%'
+  world-banned: '&c该技能在当前世界已禁用。'
+
+title:
+  fade-in: 200
+  stay: 1500
+  fade-out: 500
