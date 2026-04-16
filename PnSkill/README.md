@@ -14,6 +14,8 @@
 - 冷却期间在聊天框提示剩余时间
 - 绑定信息写入物品 NBT（PersistentDataContainer），重启后仍然有效
 - 技能通过 `skill.yml` 配置，文本通过 `config.yml` 配置
+- 支持技能级世界禁用（`banworld`）与消耗品开关（`clearitem`）
+- 支持技能级 title 时间配置（未配置时回落到 `config.yml`）
 
 ## 指令
 
@@ -32,6 +34,13 @@
 ```yml
 agility:
   name: '&b&l敏捷'
+  banworld:
+    - world_nether
+  clearitem: false
+  title:
+    fade-in: 200
+    stay: 1500
+    fade-out: 500
   a:
     title: '&b加速'
     time: 30

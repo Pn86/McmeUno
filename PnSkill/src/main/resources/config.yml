@@ -18,6 +18,7 @@ messages:
   cast-success: '&a已释放技能 &b%skill% &a模式 &b%mode%'
   cooldown-subtitle: '&c冷却中，还需 &f%seconds% &c秒。'
   skill-missing-node: '&c技能配置缺失节点: &f%skill%.%mode%'
+  world-banned: '&c该技能在当前世界已禁用。'
 
 title:
   fade-in: 200

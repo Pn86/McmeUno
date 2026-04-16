@@ -1,5 +1,12 @@
 agility:
   name: '&b&l敏捷'
+  banworld:
+    - world_nether
+  clearitem: false
+  title:
+    fade-in: 200
+    stay: 1500
+    fade-out: 500
   a:
     title: '&b加速'
     time: 30

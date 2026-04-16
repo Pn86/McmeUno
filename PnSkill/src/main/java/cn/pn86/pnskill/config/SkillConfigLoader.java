@@ -3,6 +3,7 @@ package cn.pn86.pnskill.config;
 import cn.pn86.pnskill.PnSkillPlugin;
 import cn.pn86.pnskill.model.SkillDefinition;
 import cn.pn86.pnskill.model.SkillModeDefinition;
+import cn.pn86.pnskill.model.SkillTitleSetting;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -43,7 +44,13 @@ public class SkillConfigLoader {
             String name = root.getString("name", key);
             SkillModeDefinition modeA = readMode(root, "a");
             SkillModeDefinition modeB = readMode(root, "b");
-            skillMap.put(id, new SkillDefinition(id, name, modeA, modeB));
+            List<String> banWorlds = root.getStringList("banworld").stream()
+                    .map(s -> s.toLowerCase(Locale.ROOT))
+                    .toList();
+            boolean clearItem = root.getBoolean("clearitem", false);
+            SkillTitleSetting titleSetting = readTitleSetting(root.getConfigurationSection("title"));
+
+            skillMap.put(id, new SkillDefinition(id, name, modeA, modeB, banWorlds, clearItem, titleSetting));
         }
     }
 
@@ -68,5 +75,15 @@ public class SkillConfigLoader {
         long cooldown = section.getLong("time", 0L);
         List<String> actions = new ArrayList<>(section.getStringList("action"));
         return new SkillModeDefinition(title, cooldown, actions);
+    }
+
+    private SkillTitleSetting readTitleSetting(ConfigurationSection titleSection) {
+        if (titleSection == null) {
+            return null;
+        }
+        long fadeIn = titleSection.getLong("fade-in", -1);
+        long stay = titleSection.getLong("stay", -1);
+        long fadeOut = titleSection.getLong("fade-out", -1);
+        return new SkillTitleSetting(fadeIn, stay, fadeOut);
     }
 }

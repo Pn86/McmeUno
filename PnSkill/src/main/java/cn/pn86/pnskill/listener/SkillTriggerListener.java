@@ -20,9 +20,10 @@ public class SkillTriggerListener implements Listener {
         this.skillCastService = skillCastService;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null) {
+        EquipmentSlot hand = event.getHand();
+        if (hand == null) {
             return;
         }
 
@@ -32,7 +33,9 @@ public class SkillTriggerListener implements Listener {
         }
 
         Player player = event.getPlayer();
-        ItemStack triggerItem = event.getItem();
+        ItemStack triggerItem = hand == EquipmentSlot.HAND
+                ? player.getInventory().getItemInMainHand()
+                : player.getInventory().getItemInOffHand();
         String mode = player.isSneaking() ? "b" : "a";
         CastResult result = skillCastService.castFromItem(player, triggerItem, mode);
         if (result == CastResult.CAST_SUCCESS || result == CastResult.ON_COOLDOWN) {
@@ -42,7 +45,7 @@ public class SkillTriggerListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onInteractEntity(PlayerInteractEntityEvent event) {
         EquipmentSlot hand = event.getHand();
         if (hand == null) {
