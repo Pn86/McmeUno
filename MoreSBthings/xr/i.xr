@@ -1,0 +1,6 @@
+import xrs.*.io.lib
+i import Main ( Only = True )
+ run *
+  goto ReginAction
+  score set %start_1% = 0
+  whit %start_1% = 1
