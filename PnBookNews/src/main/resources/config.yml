@@ -1,0 +1,46 @@
+# PnBookNews 配置文件
+settings:
+  # 是否启用插件总开关。
+  enabled: true
+  # 玩家每次进入服务器时是否弹出公告书。
+  show-on-every-join: true
+  # 玩家进服后延迟多少 tick 打开书。20 tick = 1 秒。
+  open-delay-ticks: 20
+  # 是否启用 AuthMe 兼容。启用且服务器安装 AuthMe 时，会在玩家登录 AuthMe 后打开书。
+  authme-compat: true
+  # 是否启用 PlaceholderAPI 变量解析。需要服务器安装 PlaceholderAPI。
+  placeholderapi: true
+
+book:
+  title: '&6服务器公告'
+  author: '&bPn86'
+  # 每个列表项是一页书页。支持 & 颜色字符和 PlaceholderAPI 变量。
+  pages:
+    - |-
+      &6&l欢迎来到服务器
+      &0你好，&a%player_name%&0！
+
+      &0请阅读本公告。
+      &e祝你游戏愉快！
+    - |-
+      &b&l常用命令
+      &0/spawn &7返回出生点
+      &0/tpa 玩家名 &7请求传送
+      &0/pwarp &7打开地标菜单
+    - |-
+      &c&l服务器规则
+      &01. 禁止作弊
+      &02. 禁止恶意破坏
+      &03. 友好交流
+
+language:
+  prefix: '&7[&6PnBookNews&7] '
+  no-permission: '&c你没有权限执行这个命令。'
+  only-player: '&c该命令只能由玩家执行。'
+  reloaded: '&a插件已重载。'
+  reload-failed: '&c插件重载失败，请检查控制台。'
+  disabled: '&c插件当前已关闭。'
+  authme-hooked: '&a已检测到 AuthMe，公告书将在玩家登录后打开。'
+  authme-not-found: '&e未检测到 AuthMe，公告书将在玩家进入服务器后打开。'
+  papi-hooked: '&a已检测到 PlaceholderAPI，已启用变量解析。'
+  papi-not-found: '&e未检测到 PlaceholderAPI，将跳过 PAPI 变量解析。'
