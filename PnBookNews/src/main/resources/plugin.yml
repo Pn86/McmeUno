@@ -1,0 +1,14 @@
+name: PnBookNews
+main: cn.pn86.pnbooknews.PnBookNewsPlugin
+version: 1.0.0
+api-version: '1.21'
+authors: [Pn86]
+softdepend: [AuthMe, PlaceholderAPI]
+commands:
+  pnbn:
+    description: PnBookNews main command
+    usage: /pnbn reload
+    permission: pnbooknews.admin
+permissions:
+  pnbooknews.admin:
+    default: op
