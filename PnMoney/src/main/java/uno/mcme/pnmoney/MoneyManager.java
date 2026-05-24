@@ -21,7 +21,7 @@ public class MoneyManager {
     }
 
     public String getCurrencyName() {
-        return plugin.getConfig().getString("currency.name", "金币");
+        return plugin.getConfig().getString("currency.name", "CustomMoney");
     }
 
     public BigDecimal getDefaultBalance() {
