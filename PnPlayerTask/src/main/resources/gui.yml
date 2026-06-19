@@ -1,0 +1,43 @@
+title: "&6任务页面"
+size: 54
+task-slots: [10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34]
+buttons:
+  filler:
+    enabled: true
+    item: black_stained_glass_pane
+    name: " "
+    lore: []
+  previous:
+    slot: 45
+    item: arrow
+    name: "&e上一页"
+    lore: ["&7当前页: &f%page%"]
+  next:
+    slot: 53
+    item: arrow
+    name: "&e下一页"
+    lore: ["&7当前页: &f%page%"]
+  close:
+    slot: 49
+    item: barrier
+    name: "&c关闭"
+    lore: []
+task-display:
+  available:
+    lore-add:
+      - ""
+      - "&e点击检测并领取奖励"
+  complete:
+    item: lime_stained_glass_pane
+    lore-add:
+      - ""
+      - "&a已完成，点击领取奖励"
+  claimed:
+    item: gray_stained_glass_pane
+    lore-add:
+      - ""
+      - "&7奖励已领取"
+  incomplete:
+    lore-add:
+      - ""
+      - "&c未完成"
