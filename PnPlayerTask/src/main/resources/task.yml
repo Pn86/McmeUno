@@ -1,0 +1,52 @@
+TestTask:
+  item: oak_log
+  name: "&e&l获得木头"
+  lore:
+    - "&7获得一个木头"
+    - "&8条件: 背包拥有 1 个橡木原木"
+  retime: none # none=一次性任务不刷新；day=每天0点；week=每周一0点；month=每月一日0点；100=完成后100分钟后刷新
+  complete-title: "&e%task_name%"
+  complete-subtitle: "&a任务完成！输入 /task 领取奖励"
+  complete-message: "&a你完成了 &e%task_name% &a，输入 &e/task &a打开页面领取奖励。"
+  if:
+    - "[have_item] oak_log = 1"
+  action:
+    - "eco give %player_name% 1000"
+
+# 更多 retime 示例：
+# DailyTask:
+#   item: clock
+#   name: "&e每日任务"
+#   lore: ["&7每天0点刷新"]
+#   retime: day
+#   if:
+#     - "[int] %player_level% >= 1"
+#   action:
+#     - "eco give %player_name% 100"
+# WeeklyTask:
+#   item: emerald
+#   name: "&a每周任务"
+#   lore: ["&7每周一0点刷新"]
+#   retime: week
+#   if:
+#     - "[get_item] coal >= 3"
+#   action:
+#     - "eco give %player_name% 300"
+# MonthlyTask:
+#   item: diamond
+#   name: "&b每月任务"
+#   lore: ["&7每月1日0点刷新"]
+#   retime: month
+#   if:
+#     - "[drop_item] coal >= 3"
+#   action:
+#     - "eco give %player_name% 1000"
+# CooldownTask:
+#   item: apple
+#   name: "&c冷却任务"
+#   lore: ["&7完成后100分钟刷新"]
+#   retime: 100
+#   if:
+#     - "[use_item] apple >= 5"
+#   action:
+#     - "eco give %player_name% 50"
