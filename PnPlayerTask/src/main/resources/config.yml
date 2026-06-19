@@ -1,0 +1,19 @@
+settings:
+  # 自动检测任务完成状态的间隔，单位：秒
+  check-interval-seconds: 5
+
+messages:
+  prefix: "&6[PnPlayerTask] "
+  no-permission: "&c你没有权限。"
+  player-only: "&c该命令只能由玩家执行。"
+  reload: "&a插件配置已重载。"
+  reset-success: "&a已重置玩家 &e%player% &a的任务数据。"
+  player-not-found: "&c找不到该玩家数据。"
+  task-not-found: "&c任务不存在。"
+  already-claimed: "&c你已经领取过该任务奖励。"
+  not-complete: "&c你还没有完成该任务。"
+  claim-success: "&a任务 &e%task_name% &a奖励领取成功！"
+  complete-title: "&e%task_name%"
+  complete-subtitle: "&a任务已完成！输入 /task 领取奖励"
+  complete-message: "&a任务 &e%task_name% &a已完成！输入 &e/task &a打开任务页面领取奖励。"
+  help: "&6/task &7打开任务页面\n&6/pnplayertask reload &7重载插件\n&6/pnplayertask reset [玩家名] &7重置玩家任务数据"

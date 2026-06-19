@@ -1,0 +1,20 @@
+name: PnPlayerTask
+version: 1.0.0
+main: uno.mcme.pnplayertask.PnPlayerTaskPlugin
+api-version: '1.21'
+author: Pn86
+softdepend: [PlaceholderAPI]
+commands:
+  task:
+    description: 打开任务页面
+    usage: /task
+  pnplayertask:
+    description: PnPlayerTask 管理命令
+    usage: /pnplayertask <reload|reset>
+permissions:
+  pnplayertask.admin:
+    description: 管理 PnPlayerTask
+    default: op
+  pnplayertask.use:
+    description: 使用任务菜单
+    default: true
