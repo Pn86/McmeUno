@@ -4,7 +4,7 @@ McmeUno服务器是一个普普通通的Mincraft群组服务器，它是一个�
 
 【更多信息建议进入交流群查看】
 
-服务器地址：www.mcme.uno
+服务器地址：mc.mcme.uno
 
 服务器官网: https://www.mcme.uno/
 
